@@ -1,0 +1,33 @@
+app-header {
+    position: fixed;
+    top: 0;
+    height: 5rem;
+    width: 100%;
+    z-index: 2;
+}
+main {
+    position: absolute;
+    width: 100%;
+    top: 5rem;
+    z-index: 1;
+}
+app-sidebar {
+    position: absolute;
+    left: 0;
+    width: 75px;
+    height: calc(100vh - 5rem);
+    overflow: hidden;
+}
+.side-nav-open {
+    width: 250px;
+}
+.main-content {
+    position: absolute;
+    left: 75px;
+    width: calc(100% - 75px);
+    // transform: scale(1.1);
+}
+.main-content-shrink {
+    left: 250px;
+    width: calc(100% - 250px);
+}
