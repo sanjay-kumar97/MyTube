@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "MyTube:build:production",
+            "firebaseProject": "mytube-v0",
+            "firebaseHostingSite": "mytube-v0"
+          }
         }
       }
     }

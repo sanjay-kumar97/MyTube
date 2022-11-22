@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
   @Output() sideNavToggled: EventEmitter<any> = new EventEmitter<boolean>();
   menuState: boolean = true;
 
-  constructor() { }
+  constructor(private route: Router) { }
   searchIcon: boolean = false;
   ngOnInit(): void {
   }
@@ -25,5 +26,13 @@ export class HeaderComponent implements OnInit {
   }
   hideIcon() {
     this.searchIcon = false;
+  }
+
+  navigateToUploadVideoPage() {
+    this.route.navigate(['Upload']);
+  }
+
+  navigateToHomePage() {
+    this.route.navigate(['Home']);
   }
 }

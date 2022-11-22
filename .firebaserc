@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "mytube-v0": {
+      "hosting": {
+        "MyTube": [
+          "mytube-v0"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "mytube-v0"
+  }
+}
