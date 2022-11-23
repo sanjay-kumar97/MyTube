@@ -25,6 +25,7 @@ app-sidebar {
     position: absolute;
     left: 75px;
     width: calc(100% - 75px);
+    overflow: hidden;
 }
 .main-content-shrink {
     left: 250px;

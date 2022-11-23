@@ -25,18 +25,32 @@ export class HomeComponent implements OnInit {
   videoId = '';
   file: any;
   dataFromDB: any;
+  loader: boolean = true;
   myUrl!: SafeResourceUrl;
 
   ngOnInit(): void {
     this.setLinks();
     this.getLinks();
-    let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
-    this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-    this.videoLinks.push(this.myUrl);
+    // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
+    // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+    // this.videoLinks.push(this.myUrl);
   }
 
   setLinks() {
     console.log('From SetLinks');
+    setTimeout(() => {
+      console.log(this.dataFromDB);
+      for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
+        let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
+        this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+        console.log(this.myUrl);
+        this.videoLinks.push(this.myUrl);
+        // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
+      }
+      this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
+      console.log(this.videoLinks);
+      this.loader = false;
+    }, 3000);
     // for (let i = 0; i < this.videoLinks.length; i++) {
     //   this.videoLinks[i].replace('u.be', 'ube.com/embed');
     //   this.dbService.writeData(this.videoLinks[i], i);
@@ -64,7 +78,7 @@ export class HomeComponent implements OnInit {
     });
     // this.data = this.dbService.readData();
     setTimeout(() => { this.links = Object.keys(this.dataFromDB); }, 2000);
-    setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
+    // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
 
   }
 
@@ -102,7 +116,7 @@ export class HomeComponent implements OnInit {
     // }
     // this.getLinks();
 
-    // this.videoLinks.push(this.myUrl);
+    this.videoLinks.push(this.myUrl);
 
     //   const storageRef = st.ref(this.storage, this.file.name);
     //   const uploadTask = st.uploadBytesResumable(storageRef, this.file);

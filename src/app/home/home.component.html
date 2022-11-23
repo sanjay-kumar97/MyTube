@@ -1,12 +1,32 @@
 <div class="container-fluid bg-danger">
-    <div class="videos d-flex gap-5 flex-wrap py-4 px-1">
-        <iframe *ngFor="let link of videoLinks" [src]="link" frameborder="0"></iframe>
-        <!-- <p *ngFor="let link of videoLinks" [innerHTML]="link"></p> -->
-        <div class="d-flex flex-column justify-content-around align-items-center bg-success p-1">
-            <input type="file" (change)="addData($event)" accept="video/mp4">
-            <!-- <input type="text" placeholder="UserId"> -->
-            <!-- <input type="text" placeholder="VideoId"> -->
-            <input type="submit" (click)="addToStorage()" onsubmit="getvalues()">
+    <div class="videos d-flex gap-4 flex-wrap p-5">
+        <div class="container-fluid" *ngIf="loader">
+            <ngx-skeleton-loader id="one" count="2" [theme]="{ 
+                        'border-radius': '15px',
+                        height: '150px',
+                        width: '300px',
+                        'background-color': '#000',
+                        border: '1px solid transparent',
+                        'margin': '8px'
+                    }" class="col-12"></ngx-skeleton-loader>
+            <ngx-skeleton-loader id="two" count="3" [theme]="{ 
+                        'border-radius': '15px',
+                        height: '150px',
+                        width: '300px',
+                        'background-color': '#000',
+                        border: '1px solid transparent',
+                        'margin': '8px'
+                    }" class="col-12"></ngx-skeleton-loader>
         </div>
+        <ng-container *ngIf="!loader">
+            <iframe *ngFor="let link of videoLinks" [src]="link" frameborder="0"></iframe>
+        </ng-container>
+        <!-- <p *ngFor="let link of videoLinks" [innerHTML]="link"></p> -->
+        <!-- <div class="d-flex flex-column justify-content-around align-items-center bg-success p-1">
+            <input type="file" (change)="addData($event)" accept="video/mp4">
+            <input type="text" placeholder="UserId">
+            <input type="text" placeholder="VideoId">
+            <input type="submit" (click)="addToStorage()" onsubmit="getvalues()">
+        </div> -->
     </div>
 </div>
