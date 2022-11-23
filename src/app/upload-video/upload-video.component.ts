@@ -89,28 +89,28 @@ export class UploadVideoComponent implements OnInit {
 
     // this.videoLinks.push(this.myUrl);
 
-    // const storageRef = st.ref(this.storage, this.file.name);
-    // const uploadTask = st.uploadBytesResumable(storageRef, this.file);
-    // uploadTask.on('state_changed',
-    //   (snapshot) => {
-    //     console.log('Upload Done');
-    //   },
-    //   (error) => {
-    //     console.log(error.message);
-    //   },
-    //   () => {
-    //     st.getDownloadURL(uploadTask.snapshot.ref)
-    //       .then((downloadURL) => {
-    //         console.log('File uploaded to', downloadURL);
-    //         this.videoData.videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-    //         let timestamp = new Date().getTime()
-    //         setTimeout(() => { console.log(this.videoData.videoId); this.writeVideoData(downloadURL, this.videoData.title, this.videoData.videoId, this.videoData.description, timestamp); }, 2000);
-    //       });
-    //   }
-    // )
-    // console.log(this.file);
-    alert('Done :)');
-    this.redirectToHome();
+    const storageRef = st.ref(this.storage, this.file.name);
+    const uploadTask = st.uploadBytesResumable(storageRef, this.file);
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        console.log('Upload Done');
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        st.getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            console.log('File uploaded to', downloadURL);
+            this.videoData.videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
+            let timestamp = new Date().getTime()
+            setTimeout(() => { console.log(this.videoData.videoId); this.writeVideoData(downloadURL, this.videoData.title, this.videoData.videoId, this.videoData.description, timestamp); }, 2000);
+          });
+        alert('Done :)');
+        this.redirectToHome();
+      }
+    )
+    console.log(this.file);
     // console.log(new Date(timestamp)); methods -> .toDateString() / .toLocaleDateString() / .toLocaleTimeString()
   }
 
