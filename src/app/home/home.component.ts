@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.setLinks();
     this.getLinks();
-    let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=28ecd252-3004-4fa2-8ffd-a29d6d9460fc/";
+    let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
     this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     this.videoLinks.push(this.myUrl);
   }
