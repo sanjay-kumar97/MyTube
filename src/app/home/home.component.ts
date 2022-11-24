@@ -25,15 +25,16 @@ export class HomeComponent implements OnInit {
   videoId = '';
   file: any;
   dataFromDB: any;
-  loader: boolean = true;
+  loader: boolean = false;
   myUrl!: SafeResourceUrl;
 
   ngOnInit(): void {
-    this.setLinks();
-    this.getLinks();
+    // this.setLinks();
+    // this.getLinks();
     // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
     // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     // this.videoLinks.push(this.myUrl);
+    this.writeUserData('Peter', 'abx89v0908bns');
   }
 
   setLinks() {
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
       }
       this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
       console.log(this.videoLinks);
-      this.loader = false;
+      // this.loader = false;
     }, 3000);
     // for (let i = 0; i < this.videoLinks.length; i++) {
     //   this.videoLinks[i].replace('u.be', 'ube.com/embed');
@@ -59,19 +60,20 @@ export class HomeComponent implements OnInit {
     console.log('END of SetLinks');
   }
 
-  writeUserData(url: string, title: string, videoId: string) {
-    db.set(db.ref(this.database, 'videos/' + videoId), {
-      title: title,
-      url: url,
-      views: 0,
-      likes: 0,
-      time: 0
+  writeUserData(name: string, userId: string) {
+    db.set(db.ref(this.database, 'users/' + userId), {
+      name: name,
+      userId: userId,
+      viewed: [''],
+      liked: [''],
+      uploaded: [''],
+      joined: new Date().toDateString()
     });
     // this.videoId += 1;
   }
 
   getLinks() {
-    const starCountRef = db.ref(this.database, 'videos/');
+    const starCountRef = db.ref(this.database, 'users/');
     db.onValue(starCountRef, (snapshot) => {
       this.dataFromDB = snapshot.val();
       console.log('From getLinks', this.dataFromDB);
