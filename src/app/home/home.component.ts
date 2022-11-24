@@ -18,19 +18,18 @@ export class HomeComponent implements OnInit {
 
   constructor(private database: db.Database, public storage: st.Storage, private sanitizer: DomSanitizer, private route: Router) { }
 
-  videoLinks: Array<SafeResourceUrl> = [
-  ];
-
   links: any;
   videoId = '';
   file: any;
   dataFromDB: any;
-  loader: boolean = false;
+  loader: boolean = true;
   myUrl!: SafeResourceUrl;
+  // arrayToIterrate: Array<any> = [];
+  videoLinks: Array<SafeResourceUrl> = [];
 
   ngOnInit(): void {
-    // this.setLinks();
-    // this.getLinks();
+    this.setLinks();
+    this.getLinks();
     // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
     // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     // this.videoLinks.push(this.myUrl);
@@ -46,11 +45,12 @@ export class HomeComponent implements OnInit {
         this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         console.log(this.myUrl);
         this.videoLinks.push(this.myUrl);
+        // console.log(this.dataFromDB);
         // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
       }
       this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
       console.log(this.videoLinks);
-      // this.loader = false;
+      this.loader = false;
     }, 3000);
     // for (let i = 0; i < this.videoLinks.length; i++) {
     //   this.videoLinks[i].replace('u.be', 'ube.com/embed');
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
   }
 
   getLinks() {
-    const starCountRef = db.ref(this.database, 'users/');
+    const starCountRef = db.ref(this.database, 'videos/');
     db.onValue(starCountRef, (snapshot) => {
       this.dataFromDB = snapshot.val();
       console.log('From getLinks', this.dataFromDB);
