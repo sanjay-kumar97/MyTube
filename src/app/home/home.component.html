@@ -2,27 +2,29 @@
     <div class="videos d-flex gap-4 flex-wrap p-5">
         <div class="container-fluid" *ngIf="loader">
             <ngx-skeleton-loader id="one" count="2" [theme]="{ 
-                        'border-radius': '15px',
-                        height: '150px',
-                        width: '300px',
-                        'background-color': '#000',
-                        border: '1px solid transparent',
-                        'margin': '8px'
-                    }" class="col-12"></ngx-skeleton-loader>
+                'border-radius': '15px',
+                height: '150px',
+                width: '300px',
+                'background-color': '#333',
+                border: '1px solid transparent',
+                'margin': '8px'
+            }" class="col-12"></ngx-skeleton-loader>
             <ngx-skeleton-loader id="two" count="3" [theme]="{ 
-                        'border-radius': '15px',
-                        height: '150px',
-                        width: '300px',
-                        'background-color': '#000',
-                        border: '1px solid transparent',
-                        'margin': '8px'
-                    }" class="col-12"></ngx-skeleton-loader>
+                'border-radius': '15px',
+                height: '150px',
+                width: '300px',
+                'background-color': '#333',
+                border: '1px solid transparent',
+                'margin': '8px'
+            }" class="col-12"></ngx-skeleton-loader>
         </div>
-        <ng-container *ngIf="!loader">
-            <ng-container *ngFor="let video of videoLinks">
-                <iframe [src]="video" frameborder="0" allow="fullscreen"></iframe>
+        <div *ngIf="!loader" class="component">
+            <ng-container *ngFor="let video of getValues(videoMap)">
+                <iframe [src]="video.url" frameborder="0" allow="fullscreen" (change)="getView($event)"></iframe>
+                <p *ngIf="showTitle" [innerText]="video.description">Title goes here Brr...</p>
+                <input id="heart" type="checkbox" value="click" (change)="getLike(video.videoId, $event)">
             </ng-container>
-        </ng-container>
+        </div>
         <!-- <p *ngFor="let link of videoLinks" [innerHTML]="link"></p> -->
         <!-- <div class="d-flex flex-column justify-content-around align-items-center bg-success p-1">
             <input type="file" (change)="addData($event)" accept="video/mp4">

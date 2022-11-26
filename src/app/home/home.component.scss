@@ -2,13 +2,14 @@ iframe {
   border-radius: 10px;
 }
 
-// .videos {
-//     display: grid;
-//     padding: 2.5rem;
-//     justify-items: center;
-//     grid-template-columns: repeat(5, 1fr);
-// }
+.videos {
+  display: grid;
+  padding: 2.5rem;
+  justify-items: center;
+  grid-template-columns: repeat(5, 1fr);
+}
 
-.videos > * {
-  flex: 1;
+.component {
+  display: flex;
+  flex-direction: column;
 }

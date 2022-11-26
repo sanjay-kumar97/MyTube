@@ -23,9 +23,11 @@ export class HomeComponent implements OnInit {
   file: any;
   dataFromDB: any;
   loader: boolean = true;
+  showTitle: boolean = false;
   myUrl!: SafeResourceUrl;
   // arrayToIterrate: Array<any> = [];
   videoLinks: Array<SafeResourceUrl> = [];
+  videoMap: any;
 
   ngOnInit(): void {
     this.setLinks();
@@ -39,18 +41,19 @@ export class HomeComponent implements OnInit {
   setLinks() {
     console.log('From SetLinks');
     setTimeout(() => {
-      console.log(this.dataFromDB);
-      for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
-        let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
-        this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-        console.log(this.myUrl);
-        this.videoLinks.push(this.myUrl);
-        // console.log(this.dataFromDB);
-        // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
-      }
-      this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
-      console.log(this.videoLinks);
+      console.log('From setLinks', this.dataFromDB);
+      // for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
+      //   let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
+      //   this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+      //   console.log(this.myUrl);
+      //   this.videoLinks.push(this.myUrl);
+      // console.log(this.dataFromDB);
+      // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
+      // }
+      // this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
+      // console.log(this.videoLinks);
       this.loader = false;
+      setTimeout(() => this.showTitle = true, 1000);
     }, 3000);
     // for (let i = 0; i < this.videoLinks.length; i++) {
     //   this.videoLinks[i].replace('u.be', 'ube.com/embed');
@@ -79,13 +82,42 @@ export class HomeComponent implements OnInit {
       console.log('From getLinks', this.dataFromDB);
     });
     // this.data = this.dbService.readData();
-    setTimeout(() => { this.links = Object.keys(this.dataFromDB); }, 2000);
+    setTimeout(() => {
+      this.links = Object.keys(this.dataFromDB);
+      let videoMap = new Map();
+      for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
+        let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
+        this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+        this.dataFromDB[Object.keys(this.dataFromDB)[i]].url = this.myUrl;
+        console.log(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title, Object.values(this.dataFromDB)[i]);
+        videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
+      }
+      this.videoMap = videoMap;
+      setTimeout(() => { console.log(this.videoMap) }, 2000);
+    }, 2000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
-
   }
 
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
+  }
+
+  getValues(map: any[]) {
+    return Array.from(map.values());
+    // return Array.from(map.values()).sort(() => Math.random() - 0.5);
+  }
+
+  getLike(vidID: string, e: any) {
+    console.log(e.target.checked, this.dataFromDB);
+    if (e.target.checked) {
+      this.dataFromDB[vidID].likes += 1;
+    } else {
+      this.dataFromDB[vidID].likes -= 1;
+    }
+  }
+
+  getView(e: Event) {
+    console.log('clicked');
   }
 
   addData(event: Event) {

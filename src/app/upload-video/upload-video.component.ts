@@ -60,7 +60,8 @@ export class UploadVideoComponent implements OnInit {
       likes: 0,
       time: timestamp,
       description: description,
-      userId: 'ID'
+      userId: 'ID',
+      videoId: videoId
     });
     // this.videoId += 1;
   }
