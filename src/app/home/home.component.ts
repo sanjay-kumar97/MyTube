@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   // arrayToIterrate: Array<any> = [];
   videoLinks: Array<SafeResourceUrl> = [];
   videoMap: any;
+  urlMap: any;
 
   ngOnInit(): void {
     this.setLinks();
@@ -42,16 +43,21 @@ export class HomeComponent implements OnInit {
     console.log('From SetLinks');
     setTimeout(() => {
       console.log('From setLinks', this.dataFromDB);
-      // for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
-      //   let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
-      //   this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-      //   console.log(this.myUrl);
-      //   this.videoLinks.push(this.myUrl);
-      // console.log(this.dataFromDB);
-      // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
-      // }
+      let urlMap = new Map()
+      for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
+        let id = this.dataFromDB[Object.keys(this.dataFromDB)[i]].videoId;
+        let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
+        urlMap.set(id, link);
+
+        // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+        // console.log(this.myUrl);
+        // this.videoLinks.push(link);
+        // console.log(this.dataFromDB);
+        // setTimeout(() => this.videoLinks.push(this.myUrl), 2000);
+      }
+      this.urlMap = urlMap;
       // this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
-      // console.log(this.videoLinks);
+      console.log(this.urlMap);
       this.loader = false;
       setTimeout(() => this.showTitle = true, 1000);
     }, 3000);
@@ -84,17 +90,22 @@ export class HomeComponent implements OnInit {
     // this.data = this.dbService.readData();
     setTimeout(() => {
       this.links = Object.keys(this.dataFromDB);
+      this.links = this.links.sort(() => Math.random() - 0.5);
+      console.log('From nowhere', this.links, this.dataFromDB[this.links[0]]);
       let videoMap = new Map();
       for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
         let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
         this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         this.dataFromDB[Object.keys(this.dataFromDB)[i]].url = this.myUrl;
         console.log(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title, Object.values(this.dataFromDB)[i]);
-        videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
+        // videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
+        for (let i = 0; i < this.links.length; i++) {
+          videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), this.dataFromDB[this.links[i]]);
+        }
       }
       this.videoMap = videoMap;
       setTimeout(() => { console.log(this.videoMap) }, 2000);
-    }, 2000);
+    }, 3000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
   }
 
@@ -107,13 +118,51 @@ export class HomeComponent implements OnInit {
     // return Array.from(map.values()).sort(() => Math.random() - 0.5);
   }
 
-  getLike(vidID: string, e: any) {
+  toggleVideo(e: any) {
+    console.log('Clicked');
+  }
+  getLike(vidID: any, e: any) {
+    // var player = document.getElementsByTagName('iframe')[0].contentWindow;
+    // console.log(player?.focus());
+    // function checkIfPlaying() {
+    //   var playerStatus = player.getPlayerState();
+
+    //   return playerStatus == 1;
+    // } 
+    // }
+    // var iframe = document.querySelector('iframe'), video;
+    // if (iframe) {
+    //   video = iframe.contentWindow?.document.getElementsByTagName('video');
+    // }
+    // const x = document.getElementsByTagName('iframe')[0].contentWindow.getElementsByTagName('video');
+    // console.log(video);
+
+
     console.log(e.target.checked, this.dataFromDB);
     if (e.target.checked) {
-      this.dataFromDB[vidID].likes += 1;
+      this.route.navigate(['SignIn']);
+      if (false) {
+        this.dataFromDB[vidID.videoId].likes += 1;
+      }
     } else {
-      this.dataFromDB[vidID].likes -= 1;
+      this.dataFromDB[vidID.videoId].likes -= 1;
     }
+    let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
+    console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
+    // console.log('VidID', this.dataFromDB[vidID.videoId].title, vidID.views, this.dataFromDB[vidID.videoId].likes, vidID.time, vidID.description, this.urlMap.get(vidID.videoId));
+    this.writeVideoData(url, this.dataFromDB[vidID.videoId].title, this.dataFromDB[vidID.videoId].videoId, this.dataFromDB[vidID.videoId].description, this.dataFromDB[vidID.videoId].time, this.dataFromDB[vidID.videoId].likes);
+    setTimeout(() => {
+      db.set(db.ref(this.database, 'videos/' + vidID.videoId), {
+        title: this.dataFromDB[vidID.videoId].title,
+        url: this.dataFromDB[vidID.videoId].url,
+        views: 0,
+        likes: this.dataFromDB[vidID.videoId].likes,
+        time: this.dataFromDB[vidID.videoId].timestamp,
+        description: this.dataFromDB[vidID.videoId].description,
+        userId: 'ID',
+        videoId: this.dataFromDB[vidID.videoId].videoId
+      });
+    }, 3000);
   }
 
   getView(e: Event) {
@@ -126,6 +175,20 @@ export class HomeComponent implements OnInit {
       this.file = target.files[0];
     }
     console.log(new Date(1669142885888));
+  }
+
+  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number) {
+    db.set(db.ref(this.database, 'videos/' + videoId), {
+      title: title,
+      url: url,
+      views: 0,
+      likes: likes,
+      time: timestamp,
+      description: description,
+      userId: 'ID',
+      videoId: videoId
+    });
+    // this.videoId += 1;
   }
 
   addToStorage() {

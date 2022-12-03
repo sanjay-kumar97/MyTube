@@ -29,7 +29,11 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToUploadVideoPage() {
-    this.route.navigate(['Upload']);
+    if (true) {
+      this.route.navigate(['SignIn']);
+    } else {
+      this.route.navigate(['Upload']);
+    }
   }
 
   navigateToHomePage() {

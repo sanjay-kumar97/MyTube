@@ -16,7 +16,7 @@ main {
 app-sidebar {
     position: fixed;
     left: 0;
-    width: 75px;
+    width: 74px;
     height: calc(100vh - 5rem);
     overflow: hidden;
 }
@@ -27,8 +27,8 @@ app-sidebar {
 
 .main-content {
     position: absolute;
-    left: 75px;
-    width: calc(100% - 75px);
+    left: 74px;
+    width: calc(100% - 74px);
     overflow: hidden;
 }
 

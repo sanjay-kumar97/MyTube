@@ -26,6 +26,7 @@ import { providePerformance, getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     HeaderComponent,
     HomeComponent,
     SidebarComponent,
-    UploadVideoComponent
+    UploadVideoComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,

@@ -2,14 +2,37 @@ iframe {
   border-radius: 10px;
 }
 
-.videos {
+.bg-success {
+  border-radius: 15px 15px 0px 0px;
+}
+
+.grad {
+  border-radius: 15px 15px 0px 0px;
+  background-image: linear-gradient(rgba(25, 135, 84, 1), rgba(25, 135, 84, 1), rgb(220, 53, 69));
+}
+
+.some-guy {
   display: grid;
-  padding: 2.5rem;
+  // padding: 2rem;
+  gap: 1.5rem;
   justify-items: center;
   grid-template-columns: repeat(5, 1fr);
 }
 
-.component {
-  display: flex;
-  flex-direction: column;
+input {
+  margin: 0;
+  transform: translateY(-25%);
+}
+
+// .video-container {
+// min-width: 18%;
+// max-width: 18%;
+// width: 20%;
+// object-fit: contain;
+// }
+
+video {
+  width: 100%;
+  max-height: 5%;
+  background-color: aquamarine;
 }
