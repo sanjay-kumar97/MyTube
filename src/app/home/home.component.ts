@@ -29,14 +29,24 @@ export class HomeComponent implements OnInit {
   videoLinks: Array<SafeResourceUrl> = [];
   videoMap: any;
   urlMap: any;
+  sideNaveState!: boolean;
+  isLoggedIn!: boolean;
 
   ngOnInit(): void {
     this.setLinks();
     this.getLinks();
+    // sessionStorage.setItem('UID', String(null));
+    // setInterval(() => {
+    //   this.sideNaveState = (sessionStorage.getItem('sideNav') == 'true') ? false : true;
+    //   console.log(this.sideNaveState);
+    // }, 2000);
+
     // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
     // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     // this.videoLinks.push(this.myUrl);
+    setTimeout(() => { this.isLoggedIn = (sessionStorage.getItem('UID') != "null") ? true : false; console.log(sessionStorage.getItem('UID'), this.isLoggedIn); }, 4000);
     this.writeUserData('Peter', 'abx89v0908bns');
+
   }
 
   setLinks() {
@@ -140,33 +150,36 @@ export class HomeComponent implements OnInit {
 
     console.log(e.target.checked, this.dataFromDB);
     if (e.target.checked) {
-      this.route.navigate(['SignIn']);
-      if (false) {
+      if (!this.isLoggedIn) {
+        this.route.navigate(['SignIn']);
+        this.dataFromDB[vidID.videoId].likes += 1;
+      } else {
         this.dataFromDB[vidID.videoId].likes += 1;
       }
     } else {
       this.dataFromDB[vidID.videoId].likes -= 1;
     }
-    let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
-    console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
-    // console.log('VidID', this.dataFromDB[vidID.videoId].title, vidID.views, this.dataFromDB[vidID.videoId].likes, vidID.time, vidID.description, this.urlMap.get(vidID.videoId));
-    this.writeVideoData(url, this.dataFromDB[vidID.videoId].title, this.dataFromDB[vidID.videoId].videoId, this.dataFromDB[vidID.videoId].description, this.dataFromDB[vidID.videoId].time, this.dataFromDB[vidID.videoId].likes);
-    setTimeout(() => {
-      db.set(db.ref(this.database, 'videos/' + vidID.videoId), {
-        title: this.dataFromDB[vidID.videoId].title,
-        url: this.dataFromDB[vidID.videoId].url,
-        views: 0,
-        likes: this.dataFromDB[vidID.videoId].likes,
-        time: this.dataFromDB[vidID.videoId].timestamp,
-        description: this.dataFromDB[vidID.videoId].description,
-        userId: 'ID',
-        videoId: this.dataFromDB[vidID.videoId].videoId
-      });
-    }, 3000);
+    // let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
+    // console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
+    // // console.log('VidID', this.dataFromDB[vidID.videoId].title, vidID.views, this.dataFromDB[vidID.videoId].likes, vidID.time, vidID.description, this.urlMap.get(vidID.videoId));
+    // this.writeVideoData(url, this.dataFromDB[vidID.videoId].title, this.dataFromDB[vidID.videoId].videoId, this.dataFromDB[vidID.videoId].description, this.dataFromDB[vidID.videoId].time, this.dataFromDB[vidID.videoId].likes);
+    // setTimeout(() => {
+    //   db.set(db.ref(this.database, 'videos/' + vidID.videoId), {
+    //     title: this.dataFromDB[vidID.videoId].title,
+    //     url: this.dataFromDB[vidID.videoId].url,
+    //     views: 0,
+    //     likes: this.dataFromDB[vidID.videoId].likes,
+    //     time: this.dataFromDB[vidID.videoId].timestamp,
+    //     description: this.dataFromDB[vidID.videoId].description,
+    //     userId: 'ID',
+    //     videoId: this.dataFromDB[vidID.videoId].videoId
+    //   });
+    // }, 3000);
   }
 
   getView(e: Event) {
-    console.log('clicked');
+    // const x = document.getElementsByTagName('iframe')[0];
+    // console.log(e, x.contentWindow?.document.getElementsByClassName('controls')[0]);
   }
 
   addData(event: Event) {

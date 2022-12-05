@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { getAuth, signOut } from "firebase/auth";
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,15 @@ export class HeaderComponent implements OnInit {
 
   @Output() sideNavToggled: EventEmitter<any> = new EventEmitter<boolean>();
   menuState: boolean = true;
+  userName!: string | null;
+  isLoggedIn: boolean = false;
 
   constructor(private route: Router) { }
   searchIcon: boolean = false;
   ngOnInit(): void {
+    this.userName = sessionStorage.getItem('userName');
+    this.isLoggedIn = (sessionStorage.getItem('UID') != null) ? true : false;
+    console.log(this.isLoggedIn);
   }
 
   sideNavToggle() {
@@ -29,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToUploadVideoPage() {
-    if (true) {
+    if (!this.isLoggedIn) {
       this.route.navigate(['SignIn']);
     } else {
       this.route.navigate(['Upload']);
@@ -39,4 +45,18 @@ export class HeaderComponent implements OnInit {
   navigateToHomePage() {
     this.route.navigate(['Home']);
   }
+
+  logoutAccount() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log("Sign-out successful.");
+      sessionStorage.removeItem('UID');
+      sessionStorage.removeItem('userName');
+      this.route.navigate(['Home']);
+      window.location.reload();
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
 }
