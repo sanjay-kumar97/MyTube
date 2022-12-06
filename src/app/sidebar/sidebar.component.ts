@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,9 +10,17 @@ export class SidebarComponent implements OnInit {
 
   @Input() sideNavState: boolean = false;
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
+  }
+
+  navigateToHome() {
+    this.route.navigate(['Home']);
+  }
+
+  navigateToLibrary() {
+    this.route.navigate(['library']);
   }
 
 }

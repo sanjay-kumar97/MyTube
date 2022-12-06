@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 // import { Database, onValue, ref, set } from '@angular/fire/database';
 // import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import * as st from '@angular/fire/storage';
 import * as db from '@angular/fire/database';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 // import { DatabaseService } from '../services/database.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private database: db.Database, public storage: st.Storage, private sanitizer: DomSanitizer, private route: Router) { }
+  constructor(private api: ApiService, private sanitizer: DomSanitizer, private route: Router) { }
 
   links: any;
   videoId = '';
@@ -45,8 +46,8 @@ export class HomeComponent implements OnInit {
     // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
     // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
     // this.videoLinks.push(this.myUrl);
-    setTimeout(() => { this.isLoggedIn = (sessionStorage.getItem('UID') != "null") ? true : false; console.log(sessionStorage.getItem('UID'), this.isLoggedIn); }, 4000);
-    this.writeUserData('Peter', 'abx89v0908bns');
+    // setTimeout(() => { this.isLoggedIn = (sessionStorage.getItem('UID') != "null") ? true : false; console.log(sessionStorage.getItem('UID'), this.isLoggedIn); }, 4000);
+    // this.writeUserData('Peter', 'abx89v0908bns');
 
   }
 
@@ -85,25 +86,26 @@ export class HomeComponent implements OnInit {
     console.log('END of SetLinks');
   }
 
-  writeUserData(name: string, userId: string) {
-    db.set(db.ref(this.database, 'users/' + userId), {
-      name: name,
-      userId: userId,
-      viewed: [''],
-      liked: [''],
-      uploaded: [''],
-      joined: new Date().toDateString()
-    });
-    // this.videoId += 1;
-  }
+  // writeUserData(name: string, userId: string) {
+  //   db.set(db.ref(this.database, 'users/' + userId), {
+  //     name: name,
+  //     userId: userId,
+  //     viewed: [''],
+  //     liked: [''],
+  //     uploaded: [''],
+  //     joined: new Date().toDateString()
+  //   });
+  //   // this.videoId += 1;
+  // }
 
   getLinks() {
-    const starCountRef = db.ref(this.database, 'videos/');
-    db.onValue(starCountRef, (snapshot) => {
-      this.dataFromDB = snapshot.val();
-      console.log('From getLinks', this.dataFromDB);
-    });
+    // const starCountRef = db.ref(this.database, 'videos/');
+    // db.onValue(starCountRef, (snapshot) => {
+    //   this.dataFromDB = snapshot.val();
+    //   console.log('From getLinks', this.dataFromDB);
+    // });
     // this.data = this.dbService.readData();
+    this.dataFromDB = this.api.readVideoData();
     setTimeout(() => {
       this.links = Object.keys(this.dataFromDB);
       this.links = this.links.sort(() => Math.random() - 0.5);
@@ -196,19 +198,19 @@ export class HomeComponent implements OnInit {
     console.log(new Date(1669142885888));
   }
 
-  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number) {
-    db.set(db.ref(this.database, 'videos/' + videoId), {
-      title: title,
-      url: url,
-      views: 0,
-      likes: likes,
-      time: timestamp,
-      description: description,
-      userId: 'ID',
-      videoId: videoId
-    });
-    // this.videoId += 1;
-  }
+  // writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number) {
+  //   db.set(db.ref(this.database, 'videos/' + videoId), {
+  //     title: title,
+  //     url: url,
+  //     views: 0,
+  //     likes: likes,
+  //     time: timestamp,
+  //     description: description,
+  //     userId: 'ID',
+  //     videoId: videoId
+  //   });
+  //   // this.videoId += 1;
+  // }
 
   addToStorage() {
     setTimeout(() => this.getLinks(), 2000);

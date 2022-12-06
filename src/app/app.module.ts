@@ -27,6 +27,7 @@ import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-confi
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { LibraryComponent } from './library/library.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     HomeComponent,
     SidebarComponent,
     UploadVideoComponent,
-    SignInComponent
+    SignInComponent,
+    LibraryComponent
   ],
   imports: [
     BrowserModule,
