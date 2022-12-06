@@ -18,7 +18,7 @@
                 'margin': '8px'
             }" class="col-12"></ngx-skeleton-loader>
         </div>
-        <div *ngIf="!loader" class="col-12 d-flex gap-4 justify-content-evenly flex-wrap">
+        <div *ngIf="!loader" class="col-12 d-flex gap-4 justify-content-evenly flex-wrap wrappee">
             <!-- <div *ngIf="!loader" class="d-flex mx-auto flex-wrap" [ngClass]="sideNaveState ? 'gap-5' : 'gap-4'"> -->
             <div *ngFor="let video of getValues(videoMap)" class="d-flex flex-column bg-success p-2">
                 <iframe [src]="video.url" frameborder="0" allow="fullscreen" id="yt-player"

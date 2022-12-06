@@ -34,6 +34,7 @@ export class SignInComponent implements OnInit {
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
+        console.info(errorCode, errorMessage);
       });
   }
 

@@ -48,15 +48,18 @@ export class HeaderComponent implements OnInit {
 
   logoutAccount() {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      console.log("Sign-out successful.");
-      sessionStorage.removeItem('UID');
-      sessionStorage.removeItem('userName');
-      this.route.navigate(['Home']);
-      window.location.reload();
-    }).catch((error) => {
-      console.log(error);
-    });
+    // console.log(auth);
+    if (auth.currentUser) {
+      signOut(auth).then(() => {
+        console.log("Sign-out successful.");
+        sessionStorage.removeItem('UID');
+        sessionStorage.removeItem('userName');
+        this.route.navigate(['Home']);
+        window.location.reload();
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   }
 
 }

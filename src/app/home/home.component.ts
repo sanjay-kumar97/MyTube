@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   urlMap: any;
   sideNaveState!: boolean;
   isLoggedIn!: boolean;
+  lastChild: string = '';
 
   ngOnInit(): void {
     this.setLinks();
@@ -53,11 +54,16 @@ export class HomeComponent implements OnInit {
     console.log('From SetLinks');
     setTimeout(() => {
       console.log('From setLinks', this.dataFromDB);
-      let urlMap = new Map()
-      for (let i = 0; i < Object.keys(this.dataFromDB).length; i++) {
+      let urlMap = new Map();
+      let N = Object.keys(this.dataFromDB).length;
+      for (let i = 0; i < N; i++) {
         let id = this.dataFromDB[Object.keys(this.dataFromDB)[i]].videoId;
         let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
         urlMap.set(id, link);
+        if (i == N - 1) {
+          this.lastChild = id;
+          console.log('YESSSSSS IMM HEREEEE!')
+        }
 
         // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         // console.log(this.myUrl);
