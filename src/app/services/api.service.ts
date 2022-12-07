@@ -45,13 +45,20 @@ export class ApiService {
   }
 
   readVideoData() {
-    const starCountRef = db.ref(this.database, 'videos/');
-    var dataFromDB: any;
-    db.onValue(starCountRef, (snapshot) => {
-      dataFromDB = snapshot.val();
-      console.log('From getVideoData', dataFromDB);
+    const dbRef = db.ref(db.getDatabase());
+    var data, dataToReturn = {};
+    db.get(db.child(dbRef, 'videos/')).then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+        Object.assign(dataToReturn, data);
+        console.log('from get', snapshot.val(), typeof (data));
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
     });
-    return dataFromDB;
+    return dataToReturn;
   }
 
   writeToStorage(file: any, videoId: string) {
@@ -74,5 +81,4 @@ export class ApiService {
       }
     )
   }
-
 }

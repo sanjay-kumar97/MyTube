@@ -17,14 +17,21 @@ export class HomeComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private api: ApiService, private sanitizer: DomSanitizer, private route: Router) { }
+  name = 'Angular';
+  constructor(private api: ApiService, private sanitizer: DomSanitizer, private route: Router) {
+    // this.api.getValue().then((data: string) => {
+    //   this.name = data;
+    //   console.log(data);
+    // })
+
+  }
 
   links: any;
   videoId = '';
   file: any;
   dataFromDB: any;
   loader: boolean = true;
-  showTitle: boolean = false;
+  // showTitle: boolean = false;
   myUrl!: SafeResourceUrl;
   // arrayToIterrate: Array<any> = [];
   videoLinks: Array<SafeResourceUrl> = [];
@@ -35,8 +42,20 @@ export class HomeComponent implements OnInit {
   lastChild: string = '';
 
   ngOnInit(): void {
+    // setTimeout(() => {
     this.setLinks();
     this.getLinks();
+    // }
+    //   , 2000);
+    // setTimeout(() => {
+    //   this.dataFromDB = this.api.readVideoData();
+    //   setTimeout(() =>
+    //     console.log('Should come', this.dataFromDB)
+    //     , 5000);
+    // }, 5000);
+    // this.hellllYeahh();
+    this.dataFromDB = this.api.readVideoData();
+    setTimeout(() => console.info(this.dataFromDB), 2000);
     // sessionStorage.setItem('UID', String(null));
     // setInterval(() => {
     //   this.sideNaveState = (sessionStorage.getItem('sideNav') == 'true') ? false : true;
@@ -76,8 +95,8 @@ export class HomeComponent implements OnInit {
       // this.videoLinks = this.videoLinks.sort(() => Math.random() - 0.5);
       console.log(this.urlMap);
       this.loader = false;
-      setTimeout(() => this.showTitle = true, 1000);
-    }, 3000);
+      // setTimeout(() => this.showTitle = true, 1000);
+    }, 5000);
     // for (let i = 0; i < this.videoLinks.length; i++) {
     //   this.videoLinks[i].replace('u.be', 'ube.com/embed');
     //   this.dbService.writeData(this.videoLinks[i], i);
@@ -105,7 +124,7 @@ export class HomeComponent implements OnInit {
     //   console.log('From getLinks', this.dataFromDB);
     // });
     // this.data = this.dbService.readData();
-    this.dataFromDB = this.api.readVideoData();
+    // this.dataFromDB = this.api.readVideoData();
     setTimeout(() => {
       this.links = Object.keys(this.dataFromDB);
       this.links = this.links.sort(() => Math.random() - 0.5);
@@ -123,7 +142,7 @@ export class HomeComponent implements OnInit {
       }
       this.videoMap = videoMap;
       setTimeout(() => { console.log(this.videoMap) }, 2000);
-    }, 3000);
+    }, 5000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
   }
 

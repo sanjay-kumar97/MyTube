@@ -34,7 +34,7 @@
                     <p [innerText]="'Uploaded By ' + video.userId "></p>
                 </div>
                 <div class="d-flex">
-                    <p class="me-auto" *ngIf="showTitle" [innerText]="video.description">Title goes here Brr...</p>
+                    <p class="me-auto" [innerText]="video.description">Title goes here Brr...</p>
                     <input class="me-2" id="heart" type="checkbox" value="click" (change)="getLike(video, $event)">
                     <p [innerText]="video.likes + ' Likes'"></p>
                 </div>
