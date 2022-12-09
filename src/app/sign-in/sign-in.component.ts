@@ -23,12 +23,8 @@ export class SignInComponent implements OnInit {
         const token = credential?.accessToken;
         const user = result.user;
         console.log({ token, user });
-        sessionStorage.setItem('UID', user.uid);
-        if (user.displayName) {
-          sessionStorage.setItem('userName', user.displayName);
-        }
         this.route.navigate(['Home']);
-        setTimeout(() => window.location.reload(), 100);
+        setTimeout(() => window.location.reload(), 1000);
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

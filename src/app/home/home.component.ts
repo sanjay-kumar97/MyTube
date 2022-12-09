@@ -42,6 +42,9 @@ export class HomeComponent implements OnInit {
   lastChild: string = '';
 
   ngOnInit(): void {
+    // console.log('Home yayy', this.api.isLoggedIn() ? 'true' : 'false');
+    // this.findTime(new Date('10 / 01 / 2020').getTime());
+    // this.findTime(1670590490091);
     // setTimeout(() => {
     this.setLinks();
     this.getLinks();
@@ -135,6 +138,10 @@ export class HomeComponent implements OnInit {
         this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         this.dataFromDB[Object.keys(this.dataFromDB)[i]].url = this.myUrl;
         console.log(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title, Object.values(this.dataFromDB)[i]);
+
+        // var date = new Date([Object.keys(this.dataFromDB)[i]]);
+        // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = date.toLocaleString();
+        this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = this.findTime(this.dataFromDB[Object.keys(this.dataFromDB)[i]].time);
         // videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
         for (let i = 0; i < this.links.length; i++) {
           videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), this.dataFromDB[this.links[i]]);
@@ -144,6 +151,73 @@ export class HomeComponent implements OnInit {
       setTimeout(() => { console.log(this.videoMap) }, 2000);
     }, 5000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
+  }
+
+  findTime(prevDate: any) {
+    var currDate = new Date().getTime();
+    var result;
+    console.log({ prevDate, currDate });
+    var diffInMs = getDifferenceInMs(prevDate, currDate);
+    var seconds = Math.floor(diffInMs / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+    var weeks = Math.floor(days / 7);
+    var months = Math.floor(days / 30);
+    var years = Math.floor(months / 12);
+    console.log({ years, months, weeks, days, hours, minutes, seconds });
+    if (years != 0) {
+      result = years + " ";
+      result += (years == 1) ? "year" : "years";
+    } else if (months != 0) {
+      result = months + " ";
+      result += (months == 1) ? "month" : "months";
+    } else if (weeks != 0) {
+      result = weeks + " ";
+      result += (weeks == 1) ? "week" : "weeks";
+    } else if (days != 0) {
+      result = days + " ";
+      result += (days == 1) ? "day" : "days";
+    } else if (hours != 0) {
+      result = hours + " ";
+      result += (hours == 1) ? "hour" : "hours";
+    } else if (minutes != 0) {
+      result = minutes + " ";
+      result += (minutes == 1) ? "minute" : "minutes";
+    } else {
+      result = seconds + " ";
+      result += (seconds == 1) ? "second" : "seconds";
+    }
+    console.log('Final', result);
+    // if (days > 7) {
+    //   console.log('Weeks', Math.floor(days / 7));
+    // }
+
+    function getDifferenceInMs(date1: number, date2: number) {
+      const diffInMs = Math.abs(date2 - date1);
+      return diffInMs;
+    }
+
+    // function getDifferenceInDays(date1: number, date2: number) {
+    //   const diffInMs = Math.abs(date2 - date1);
+    //   return diffInMs / (1000 * 60 * 60 * 24);
+    // }
+
+    // function getDifferenceInHours(date1: number, date2: number) {
+    //   const diffInMs = Math.abs(date2 - date1);
+    //   return Math.floor(diffInMs / (1000 * 60 * 60));
+    // }
+
+    // function getDifferenceInMinutes(date1: number, date2: number) {
+    //   const diffInMs = Math.abs(date2 - date1);
+    //   return Math.floor(diffInMs / (1000 * 60));
+    // }
+
+    // function getDifferenceInSeconds(date1: number, date2: number) {
+    //   const diffInMs = Math.abs(date2 - date1);
+    //   return Math.floor(diffInMs / 1000);
+    // }
+    return result;
   }
 
   toggleSidebar() {
