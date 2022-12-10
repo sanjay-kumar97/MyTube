@@ -20,6 +20,7 @@ export class ApiService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = result.user;
+        this.writeUserData(user.displayName, user.uid);
         console.log({ token, user });
         this.route.navigate([page]);
         if (user.displayName) {
@@ -68,14 +69,14 @@ export class ApiService {
     setTimeout(() => window.location.reload(), 10);
   }
 
-  writeUserData(name: string, userId: string) {
+  writeUserData(name: any, userId: any) {
     db.set(db.ref(this.database, 'users/' + userId), {
       name: name,
       userId: userId,
       viewed: [''],
       liked: [''],
       uploaded: [''],
-      joined: new Date().toDateString()
+      joined: new Date().getTime()
     });
   }
 
@@ -100,13 +101,13 @@ export class ApiService {
     db.remove(db.ref(this.database, 'users/' + userId));
   }
 
-  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number, userId: any) {
+  writeVideoData(url: string, title: string, videoId: string, description: string, likes: number, userId: any) {
     db.set(db.ref(this.database, 'videos/' + videoId), {
       title: title,
       url: url,
       views: 0,
       likes: likes,
-      time: timestamp,
+      time: new Date().getTime(),
       description: description,
       userId: userId,
       videoId: videoId
@@ -153,7 +154,7 @@ export class ApiService {
           .then((downloadURL) => {
             console.log('File uploaded to', downloadURL);
             videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, new Date().getTime(), 0, this.auth.currentUser?.uid); }, 2000);
+            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, 0, this.auth.currentUser?.uid); }, 2000);
           });
       }
     )

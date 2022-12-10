@@ -37,10 +37,10 @@
                 </div> -->
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 [innerText]="video.title"></h2>
-                    <p [innerText]="'Uploaded By ' + video.userId "></p>
+                    <p [innerText]="video.time +' ago'">Time goes here Brr...</p>
                 </div>
                 <div class="d-flex">
-                    <p class="me-auto" [innerText]="video.time +' ago'">Time goes here Brr...</p>
+                    <p [innerText]="'Uploaded By ' + userFromDB[video.userId].name " class="me-auto"></p>
                     <input class="me-2" id="heart" type="checkbox" value="click" (change)="getLike(video, $event)">
                     <p [innerText]="video.likes + ' Likes'"></p>
                 </div>

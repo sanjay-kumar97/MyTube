@@ -10,7 +10,7 @@ import { ApiService } from '../services/api.service';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private route: Router, private api: ApiService) { }
+  constructor(private api: ApiService) { }
 
   loader: boolean = true;
 
