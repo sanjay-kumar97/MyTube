@@ -11,7 +11,10 @@ export class SignInComponent implements OnInit {
 
   constructor(private route: Router) { }
 
+  loader: boolean = true;
+
   ngOnInit(): void {
+    setTimeout(() => this.loader = false, 2000);
   }
 
   signInWithGoogle() {

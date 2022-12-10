@@ -1,4 +1,10 @@
-<div class="container-fluid bg-danger">
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column offline" *ngIf="!isOnline">
+    <img src="assets/offline.jpg" alt="Signin" class="img-fluid">
+    <h3>Seems like you're Offline! Try connecting or check your Interent! </h3>
+    <button class="btn btn-danger" (click)="reloadPage()">Reload Page</button>
+</div>
+
+<div class="container-fluid bg-danger" *ngIf="isOnline">
     <div class="videos d-flex gap-4 flex-wrap p-4">
         <div class="container-fluid" *ngIf="loader">
             <ngx-skeleton-loader id="one" count="2" [theme]="{ 

@@ -24,6 +24,14 @@ input {
   transform: translateY(-25%);
 }
 
+.offline {
+  min-height: 80vh;
+
+  img {
+    max-height: 40vh;
+  }
+}
+
 // .wrappee:last-child {
 //   margin-right: 200px;
 // }

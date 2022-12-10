@@ -39,42 +39,46 @@ export class HomeComponent implements OnInit {
   urlMap: any;
   sideNaveState!: boolean;
   isLoggedIn!: boolean;
-  lastChild: string = '';
+  isOnline: boolean = true;
 
   ngOnInit(): void {
-    // console.log('Home yayy', this.api.isLoggedIn() ? 'true' : 'false');
-    // this.findTime(new Date('10 / 01 / 2020').getTime());
-    // this.findTime(1670590490091);
-    // setTimeout(() => {
-    this.setLinks();
-    this.getLinks();
-    // }
-    //   , 2000);
-    // setTimeout(() => {
-    //   this.dataFromDB = this.api.readVideoData();
-    //   setTimeout(() =>
-    //     console.log('Should come', this.dataFromDB)
-    //     , 5000);
-    // }, 5000);
-    // this.hellllYeahh();
-    this.dataFromDB = this.api.readVideoData();
-    setTimeout(() => console.info(this.dataFromDB), 2000);
-    setTimeout(() => {
-      this.file = this.api.auth.currentUser?.displayName;
-      console.log('UD', this.file);
-    }, 1000);
-    // sessionStorage.setItem('UID', String(null));
-    // setInterval(() => {
-    //   this.sideNaveState = (sessionStorage.getItem('sideNav') == 'true') ? false : true;
-    //   console.log(this.sideNaveState);
-    // }, 2000);
+    if (!navigator.onLine) {
+      this.isOnline = false;
+    }
+    else {
+      // console.log('Home yayy', this.api.isLoggedIn() ? 'true' : 'false');
+      // this.findTime(new Date('10 / 01 / 2020').getTime());
+      // this.findTime(1670590490091);
+      // setTimeout(() => {
+      this.setLinks();
+      this.getLinks();
+      // }
+      //   , 2000);
+      // setTimeout(() => {
+      //   this.dataFromDB = this.api.readVideoData();
+      //   setTimeout(() =>
+      //     console.log('Should come', this.dataFromDB)
+      //     , 5000);
+      // }, 5000);
+      // this.hellllYeahh();
+      this.dataFromDB = this.api.readVideoData();
+      setTimeout(() => console.info(this.dataFromDB), 2000);
+      setTimeout(() => {
+        this.file = this.api.auth.currentUser?.displayName;
+        console.log('UD', this.file);
+      }, 1000);
+      // sessionStorage.setItem('UID', String(null));
+      // setInterval(() => {
+      //   this.sideNaveState = (sessionStorage.getItem('sideNav') == 'true') ? false : true;
+      //   console.log(this.sideNaveState);
+      // }, 2000);
 
-    // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
-    // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-    // this.videoLinks.push(this.myUrl);
-    // setTimeout(() => { this.isLoggedIn = (sessionStorage.getItem('UID') != "null") ? true : false; console.log(sessionStorage.getItem('UID'), this.isLoggedIn); }, 4000);
-    // this.writeUserData('Peter', 'abx89v0908bns');
-
+      // let link = "https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Okay%20Meme%20Template.mp4?alt=media&token=876b81a9-9710-46d1-8047-96d3e2c4f831";
+      // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+      // this.videoLinks.push(this.myUrl);
+      // setTimeout(() => { this.isLoggedIn = (sessionStorage.getItem('UID') != "null") ? true : false; console.log(sessionStorage.getItem('UID'), this.isLoggedIn); }, 4000);
+      // this.writeUserData('Peter', 'abx89v0908bns');
+    }
   }
 
   setLinks() {
@@ -87,10 +91,10 @@ export class HomeComponent implements OnInit {
         let id = this.dataFromDB[Object.keys(this.dataFromDB)[i]].videoId;
         let link = this.dataFromDB[Object.keys(this.dataFromDB)[i]].url;
         urlMap.set(id, link);
-        if (i == N - 1) {
-          this.lastChild = id;
-          console.log('YESSSSSS IMM HEREEEE!')
-        }
+        // if (i == N - 1) {
+        //   this.lastChild = id;
+        //   console.log('YESSSSSS IMM HEREEEE!')
+        // }
 
         // this.myUrl = this.sanitizer.bypassSecurityTrustResourceUrl(link);
         // console.log(this.myUrl);
@@ -357,7 +361,8 @@ export class HomeComponent implements OnInit {
     // console.log(new Date(timestamp)); methods -> .toDateString() / .toLocaleDateString() / .toLocaleTimeString()
   }
 
-  redirectToHome() {
-    this.route.navigate(['Home']);
+  reloadPage() {
+    // this.route.navigate(['Home']);
+    window.location.reload();
   }
 }

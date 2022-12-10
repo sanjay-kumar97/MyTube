@@ -1,6 +1,10 @@
 <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-    <img src="assets/20944201.jpg" alt="Signin" class="img-fluid mb-3">
-    <div class="text-center mt-3">
+    <div class="lds-ripple" *ngIf="loader">
+        <div></div>
+        <div></div>
+    </div>
+    <img src="assets/signin.jpg" alt="Signin" class="img-fluid mb-3" *ngIf="!loader">
+    <div class="text-center mt-3" *ngIf="!loader">
         <h1>Oops, You must Sign-in to continue!</h1>
         <!-- <button (click)="signInWithGoogle()" class="btn btn-danger rounded">Sign-in with Google</button> -->
         <a class="btn btn-outline-dark" role="button" style="text-transform:none" (click)="signInWithGoogle()">
