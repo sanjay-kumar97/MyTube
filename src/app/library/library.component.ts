@@ -18,13 +18,13 @@ export class LibraryComponent implements OnInit {
   userDetails!: any;
 
   ngOnInit(): void {
-    // if (this.api.isLoggedIn()) {
-    this.getVideos();
-    this.setVideos();
-    this.userDetails = this.api.getUserDetails();
-    // } else {
-    // this.route.navigate(['SignIn']);
-    // }
+    if (this.api.isLoggedIn()) {
+      this.getVideos();
+      this.setVideos();
+      this.userDetails = this.api.getUserDetails();
+    } else {
+      this.route.navigate(['SignIn']);
+    }
   }
 
   getVideos() {
@@ -59,5 +59,10 @@ export class LibraryComponent implements OnInit {
 
   getValues(map: any[]) {
     return Array.from(map.values());
+  }
+
+  deleteVideo(videoTitle: String, videoId: String) {
+    this.api.removeFromStorage(videoTitle, videoId);
+    setTimeout(() => window.location.reload(), 2000);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as db from '@angular/fire/database';
-import * as st from '@angular/fire/storage';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-upload-video',
@@ -10,15 +9,17 @@ import { Router } from '@angular/router';
 })
 export class UploadVideoComponent implements OnInit {
 
-  constructor(private database: db.Database, private storage: st.Storage, private route: Router) { }
+  constructor(private api: ApiService, private route: Router) { }
 
   file: any;
   dataFromDB: any;
   links: any;
+  userId: any;
   videoData = { 'title': '', 'videoId': '', 'description': '' };
 
   ngOnInit(): void {
     this.getLinks();
+    setTimeout(() => this.userId = this.api.getUserDetails().UID);
   }
 
   getFile(event: Event) {
@@ -40,31 +41,32 @@ export class UploadVideoComponent implements OnInit {
   }
 
   getLinks() {
-    const starCountRef = db.ref(this.database, 'videos/');
-    db.onValue(starCountRef, (snapshot) => {
-      this.dataFromDB = snapshot.val();
-      console.log('From getLinks', this.dataFromDB);
-    });
-    setTimeout(() => console.log('From outer block', this.dataFromDB), 2000);
+    this.dataFromDB = this.api.readVideoData();
+    // const starCountRef = db.ref(this.database, 'videos/');
+    // db.onValue(starCountRef, (snapshot) => {
+    //   this.dataFromDB = snapshot.val();
+    //   console.log('From getLinks', this.dataFromDB);
+    // });
+    // setTimeout(() => console.log('From outer block', this.dataFromDB), 2000);
     // this.data = this.dbService.readData();
     // setTimeout(() => { this.links = Object.keys(this.dataFromDB); }, 2000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
 
   }
 
-  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number) {
-    db.set(db.ref(this.database, 'videos/' + videoId), {
-      title: title,
-      url: url,
-      views: 0,
-      likes: 0,
-      time: timestamp,
-      description: description,
-      userId: 'ID',
-      videoId: videoId
-    });
-    // this.videoId += 1;
-  }
+  // writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number) {
+  //   db.set(db.ref(this.database, 'videos/' + videoId), {
+  //     title: title,
+  //     url: url,
+  //     views: 0,
+  //     likes: 0,
+  //     time: timestamp,
+  //     description: description,
+  //     userId: 'ID',
+  //     videoId: videoId
+  //   });
+  // this.videoId += 1;
+  // }
 
   addToStorage() {
     setTimeout(() => this.getLinks(), 2000);
@@ -90,28 +92,29 @@ export class UploadVideoComponent implements OnInit {
 
     // this.videoLinks.push(this.myUrl);
 
-    const storageRef = st.ref(this.storage, this.file.name);
-    const uploadTask = st.uploadBytesResumable(storageRef, this.file);
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        console.log('Upload Done');
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      () => {
-        st.getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            console.log('File uploaded to', downloadURL);
-            this.videoData.videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-            let timestamp = new Date().getTime()
-            setTimeout(() => { console.log(this.videoData.videoId); this.writeVideoData(downloadURL, this.videoData.title, this.videoData.videoId, this.videoData.description, timestamp); }, 2000);
-          });
-        alert('Done :)');
-        this.redirectToHome();
-      }
-    )
-    console.log(this.file);
+    setTimeout(() => this.api.writeToStorage(this.file, this.videoData), 2000);
+    // const storageRef = st.ref(this.storage, this.file.name);
+    // const uploadTask = st.uploadBytesResumable(storageRef, this.file);
+    // uploadTask.on('state_changed',
+    //   (snapshot) => {
+    //     console.log('Upload Done');
+    //   },
+    //   (error) => {
+    //     console.log(error.message);
+    //   },
+    //   () => {
+    //     st.getDownloadURL(uploadTask.snapshot.ref)
+    //       .then((downloadURL) => {
+    //         console.log('File uploaded to', downloadURL);
+    //         this.videoData.videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
+    //         let timestamp = new Date().getTime()
+    //         setTimeout(() => { console.log(this.videoData.videoId); this.writeVideoData(downloadURL, this.videoData.title, this.videoData.videoId, this.videoData.description, timestamp); }, 2000);
+    //       });
+    //     alert('Done :)');
+    //     this.redirectToHome();
+    //   }
+    // )
+    // console.log(this.file);
     // console.log(new Date(timestamp)); methods -> .toDateString() / .toLocaleDateString() / .toLocaleTimeString()
   }
 

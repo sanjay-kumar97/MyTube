@@ -71,7 +71,7 @@ export class ApiService {
     db.remove(db.ref(this.database, 'users/' + userId));
   }
 
-  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number, userId: string) {
+  writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number, userId: any) {
     db.set(db.ref(this.database, 'videos/' + videoId), {
       title: title,
       url: url,
@@ -103,11 +103,13 @@ export class ApiService {
 
   deleteVideoData(videoId: String) {
     db.remove(db.ref(this.database, 'videos/' + videoId));
+    console.log('Video Removed from DB!');
   }
 
-  writeToStorage(file: any, videoId: string) {
-    const storageRef = st.ref(this.storage, file.name);
+  writeToStorage(file: any, videoData: any) {
+    const storageRef = st.ref(this.storage, videoData.title);
     const uploadTask = st.uploadBytesResumable(storageRef, file);
+    var videoId = "";
     uploadTask.on('state_changed',
       (snapshot) => {
         console.log('Upload Done', snapshot);
@@ -120,9 +122,19 @@ export class ApiService {
           .then((downloadURL) => {
             console.log('File uploaded to', downloadURL);
             videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-            setTimeout(() => { console.log(videoId); this.writeUserData(downloadURL, file.name, videoId); }, 2000);
+            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, new Date().getTime(), 0, this.auth.currentUser?.uid); }, 2000);
           });
       }
     )
+  }
+
+  removeFromStorage(title: String, id: String) {
+    const Ref = st.ref(this.storage, '/' + title);
+    st.deleteObject(Ref).then(() => {
+      console.log('Video Deleted Successfully!');
+      this.deleteVideoData(id);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
