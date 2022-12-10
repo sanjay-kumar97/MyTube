@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   validate: boolean = false;
   profileImage: any;
 
-  constructor(private route: Router, private api: ApiService, private sanitizer: DomSanitizer) { }
+  constructor(private route: Router, private api: ApiService) { }
 
   searchIcon: boolean = false;
   ngOnInit(): void {
@@ -69,6 +69,7 @@ export class HeaderComponent implements OnInit {
 
   navigateToUploadVideoPage() {
     if (!this.api.isLoggedIn()) {
+      sessionStorage.setItem('Prev', 'Upload');
       this.route.navigate(['SignIn']);
     } else {
       this.route.navigate(['Upload']);

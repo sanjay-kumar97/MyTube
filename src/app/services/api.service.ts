@@ -1,16 +1,39 @@
 import { Injectable } from '@angular/core';
 import * as st from '@angular/fire/storage';
 import * as db from '@angular/fire/database';
-import { getAuth, signOut, User } from '@firebase/auth';
+import { getAuth, signOut, GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private database: db.Database, public storage: st.Storage) { }
+  constructor(private database: db.Database, public storage: st.Storage, private route: Router) { }
 
   auth = getAuth();
+
+  signInWithGoogle(page: any) {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+        console.log({ token, user });
+        this.route.navigate([page]);
+        if (user.displayName) {
+          sessionStorage.setItem('userName', (user.displayName).toString());
+        }
+        setTimeout(() => window.location.reload(), 1000);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.info(errorCode, errorMessage);
+      });
+  }
 
   getUserDetails() {
     console.log(this.auth.currentUser);
@@ -45,26 +68,32 @@ export class ApiService {
     setTimeout(() => window.location.reload(), 10);
   }
 
-  writeUserData(name: string, userId: string, imgSrc: string) {
+  writeUserData(name: string, userId: string) {
     db.set(db.ref(this.database, 'users/' + userId), {
       name: name,
       userId: userId,
       viewed: [''],
       liked: [''],
       uploaded: [''],
-      profileImage: imgSrc,
       joined: new Date().toDateString()
     });
   }
 
   readUserData() {
-    const starCountRef = db.ref(this.database, 'users/');
-    var dataFromDB: any;
-    db.onValue(starCountRef, (snapshot) => {
-      dataFromDB = snapshot.val();
-      console.log('From getUserData', dataFromDB);
+    const dbRef = db.ref(db.getDatabase());
+    var data, dataToReturn = {};
+    db.get(db.child(dbRef, 'users/')).then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+        Object.assign(dataToReturn, data);
+        console.log('from get', snapshot.val(), typeof (data));
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
     });
-    return dataFromDB;
+    return dataToReturn;
   }
 
   deleteUserData(userId: String) {

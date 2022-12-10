@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   links: any;
+  users: any;
   videoId = '';
   file: any;
   dataFromDB: any;
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
   sideNaveState!: boolean;
   isLoggedIn!: boolean;
   isOnline: boolean = true;
+  userFromDB: any;
 
   ngOnInit(): void {
     if (!navigator.onLine) {
@@ -62,7 +64,8 @@ export class HomeComponent implements OnInit {
       // }, 5000);
       // this.hellllYeahh();
       this.dataFromDB = this.api.readVideoData();
-      setTimeout(() => console.info(this.dataFromDB), 2000);
+      this.userFromDB = this.api.readUserData();
+      setTimeout(() => console.info(this.dataFromDB, this.userFromDB), 2000);
       setTimeout(() => {
         this.file = this.api.auth.currentUser?.displayName;
         console.log('UD', this.file);
@@ -138,6 +141,7 @@ export class HomeComponent implements OnInit {
     // this.dataFromDB = this.api.readVideoData();
     setTimeout(() => {
       this.links = Object.keys(this.dataFromDB);
+      // this.users = Object.keys(this.userFromDB);
       this.links = this.links.sort(() => Math.random() - 0.5);
       console.log('From nowhere', this.links, this.dataFromDB[this.links[0]]);
       let videoMap = new Map();
@@ -150,6 +154,10 @@ export class HomeComponent implements OnInit {
         // var date = new Date([Object.keys(this.dataFromDB)[i]]);
         // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = date.toLocaleString();
         this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = this.findTime(this.dataFromDB[Object.keys(this.dataFromDB)[i]].time);
+        // if(this.dataFromDB[this.links[i]].userId == this.userFromDB[this.users[i]].userId) {
+        //   this.dataFromDB[]
+        // }
+        // console.log('Users', this.users, this.userFromDB);
         // videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
         for (let i = 0; i < this.links.length; i++) {
           videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), this.dataFromDB[this.links[i]]);

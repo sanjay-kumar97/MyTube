@@ -1,6 +1,8 @@
-<div class="lds-ripple" *ngIf="loader">
-    <div></div>
-    <div></div>
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="loader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
 </div>
 <div class="container-fluid d-flex flex-column align-items-start gap-3 m-4" *ngIf="!loader">
     <p class="display-2">My Uploads</p>

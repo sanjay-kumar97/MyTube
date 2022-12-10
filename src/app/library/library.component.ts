@@ -18,13 +18,16 @@ export class LibraryComponent implements OnInit {
   userDetails!: any;
 
   ngOnInit(): void {
-    if (this.api.isLoggedIn()) {
-      this.getVideos();
-      this.setVideos();
-      this.userDetails = this.api.getUserDetails();
-    } else {
-      this.route.navigate(['SignIn']);
-    }
+    setTimeout(() => {
+      if (this.api.isLoggedIn()) {
+        this.getVideos();
+        this.setVideos();
+        this.userDetails = this.api.getUserDetails();
+      } else {
+        sessionStorage.setItem('Prev', 'library');
+        this.route.navigate(['SignIn']);
+      }
+    }, 2000);
     console.log('In Here');
   }
 
