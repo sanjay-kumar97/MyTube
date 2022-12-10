@@ -1,2 +1,12 @@
-<h1>Sign-in Required!</h1>
-<button (click)="signInWithGoogle()">Click Here</button>
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+    <img src="assets/20944201.jpg" alt="Signin" class="img-fluid mb-3">
+    <div class="text-center mt-3">
+        <h1>Oops, You must Sign-in to continue!</h1>
+        <!-- <button (click)="signInWithGoogle()" class="btn btn-danger rounded">Sign-in with Google</button> -->
+        <a class="btn btn-outline-dark" role="button" style="text-transform:none" (click)="signInWithGoogle()">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            Login with Google
+        </a>
+    </div>
+</div>

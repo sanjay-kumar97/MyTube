@@ -22,16 +22,18 @@ export class HeaderComponent implements OnInit {
   searchIcon: boolean = false;
   ngOnInit(): void {
 
-    this.userName = sessionStorage.getItem('userName');
+    // this.userName = sessionStorage.getItem('userName');
     setTimeout(() => {
       const userDetails = this.api.getUserDetails();
       console.log('Header lol', userDetails);
+      this.isLoggedIn = this.api.isLoggedIn();
       this.profileImage = userDetails.profileImage;
+      this.userName = userDetails.displayName;
       if (this.api.auth.currentUser) {
         this.validate = true;
       }
     }, 1000);
-    this.isLoggedIn = (sessionStorage.getItem('userName') != "") ? true : false;
+    // this.isLoggedIn = (sessionStorage.getItem('userName') != "") ? true : false;
     console.log(this.isLoggedIn);
 
     // console.log('From Header', this.isLoggedIn, (this.api.isLoggedIn()) ? 'true' : 'false');
@@ -79,8 +81,12 @@ export class HeaderComponent implements OnInit {
   }
 
   logoutAccount() {
-    this.api.signOut();
-    this.route.navigate(['Home']);
+    if (this.isLoggedIn) {
+      this.api.signOut();
+      this.route.navigate(['Home']);
+    } else {
+      this.route.navigate(['SignIn']);
+    }
     // setTimeout(() => window.location.reload(), 10);
     this.ngOnInit();
   }
