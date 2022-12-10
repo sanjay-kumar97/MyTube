@@ -14,14 +14,17 @@ export class LibraryComponent implements OnInit {
 
   dataFromDB: any;
   localMap: any;
+  loader: boolean = true;
+  userDetails!: any;
 
   ngOnInit(): void {
-    if (this.api.isLoggedIn()) {
-      this.getVideos();
-      this.setVideos();
-    } else {
-      this.route.navigate(['SignIn']);
-    }
+    // if (this.api.isLoggedIn()) {
+    this.getVideos();
+    this.setVideos();
+    this.userDetails = this.api.getUserDetails();
+    // } else {
+    // this.route.navigate(['SignIn']);
+    // }
   }
 
   getVideos() {
@@ -29,22 +32,32 @@ export class LibraryComponent implements OnInit {
   }
 
   setVideos() {
+    // this.userId = this.api.auth.currentUser?.uid;
     console.log('Library', this.dataFromDB);
-    let videoMap = new Map();
-    let links = Object.keys(this.dataFromDB);
-    for (let i = 0; i < links.length; i++) {
-      let link = this.dataFromDB[links[i]].url;
-      this.dataFromDB[links[i]].url = this.sanitizer.bypassSecurityTrustResourceUrl(link);
-      // console.log(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title, Object.values(this.dataFromDB)[i]);
-
-      // var date = new Date([Object.keys(this.dataFromDB)[i]]);
-      // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = date.toLocaleString();
-      // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = this.findTime(this.dataFromDB[Object.keys(this.dataFromDB)[i]].time);
-      // videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
+    setTimeout(() => {
+      var videoMap = new Map();
+      let links = Object.keys(this.dataFromDB);
       for (let i = 0; i < links.length; i++) {
-        videoMap.set(this.dataFromDB[links[i]].title.toString(), this.dataFromDB[links[i]]);
+        let link = this.dataFromDB[links[i]].url;
+        this.dataFromDB[links[i]].url = this.sanitizer.bypassSecurityTrustResourceUrl(link);
+        // console.log(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title, Object.values(this.dataFromDB)[i]);
+
+        // var date = new Date([Object.keys(this.dataFromDB)[i]]);
+        // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = date.toLocaleString();
+        // this.dataFromDB[Object.keys(this.dataFromDB)[i]].time = this.findTime(this.dataFromDB[Object.keys(this.dataFromDB)[i]].time);
+        // videoMap.set(this.dataFromDB[Object.keys(this.dataFromDB)[i]].title.toString(), Object.values(this.dataFromDB)[i]);
+        for (let i = 0; i < links.length; i++) {
+          if (this.dataFromDB[links[i]].userId == this.userDetails.UID) {
+            videoMap.set(this.dataFromDB[links[i]].title.toString(), this.dataFromDB[links[i]]);
+          }
+        }
+        console.log(videoMap);
       }
-      console.log(videoMap);
-    }
+      setTimeout(() => { this.localMap = videoMap; this.loader = false; console.log(this.localMap) }, 2000);
+    }, 2000)
+  }
+
+  getValues(map: any[]) {
+    return Array.from(map.values());
   }
 }

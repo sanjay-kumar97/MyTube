@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
       // this.findTime(new Date('10 / 01 / 2020').getTime());
       // this.findTime(1670590490091);
       // setTimeout(() => {
-      this.setLinks();
+      // this.setLinks();
       this.getLinks();
       // }
       //   , 2000);
@@ -157,6 +157,7 @@ export class HomeComponent implements OnInit {
       }
       this.videoMap = videoMap;
       setTimeout(() => { console.log(this.videoMap) }, 2000);
+      this.loader = false;
     }, 5000);
     // setTimeout(() => { for (let i = 0; i < 3; i++) { console.log('From Local', this.dataFromDB[Object.keys(this.dataFromDB)[i]].url); } }, 2000);
   }
