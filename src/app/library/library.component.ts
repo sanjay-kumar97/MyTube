@@ -25,6 +25,7 @@ export class LibraryComponent implements OnInit {
     } else {
       this.route.navigate(['SignIn']);
     }
+    console.log('In Here');
   }
 
   getVideos() {
@@ -53,7 +54,7 @@ export class LibraryComponent implements OnInit {
         }
         console.log(videoMap);
       }
-      setTimeout(() => { this.localMap = videoMap; this.loader = false; console.log(this.localMap) }, 2000);
+      setTimeout(() => { this.localMap = videoMap; console.log(this.localMap); setTimeout(() => this.loader = false), 100; }, 2000);
     }, 2000)
   }
 
@@ -63,6 +64,6 @@ export class LibraryComponent implements OnInit {
 
   deleteVideo(videoTitle: String, videoId: String) {
     this.api.removeFromStorage(videoTitle, videoId);
-    setTimeout(() => window.location.reload(), 2000);
+    setTimeout(() => this.ngOnInit(), 1000);
   }
 }
