@@ -24,6 +24,9 @@ export class SignInComponent implements OnInit {
         const user = result.user;
         console.log({ token, user });
         this.route.navigate(['Home']);
+        if (user.displayName) {
+          sessionStorage.setItem('userName', (user.displayName).toString());
+        }
         setTimeout(() => window.location.reload(), 1000);
       }).catch((error) => {
         const errorCode = error.code;

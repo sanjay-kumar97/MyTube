@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as st from '@angular/fire/storage';
 import * as db from '@angular/fire/database';
-import { getAuth, signOut } from '@firebase/auth';
+import { getAuth, signOut, User } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,22 @@ export class ApiService {
 
   getUserDetails() {
     console.log(this.auth.currentUser);
-    return this.auth.currentUser;
+    let userDetails = { displayName: this.auth.currentUser?.displayName, profileImage: this.auth.currentUser?.photoURL, UID: this.auth.currentUser?.uid };
+    // if (this.auth.currentUser != null) {
+    return userDetails;
   }
+
   isLoggedIn() {
+    // const user = this.auth.currentUser;
+    // const val = this.auth.onAuthStateChanged((user) => {
+    //   if(user) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // })
+
+    // return val() ? true : false;
     return (this.auth.currentUser) ? true : false;
   }
 
@@ -24,10 +37,12 @@ export class ApiService {
     if (this.auth.currentUser) {
       signOut(this.auth).then(() => {
         console.log("Sign-out successful.");
+        sessionStorage.setItem('userName', "");
       }).catch((error) => {
         console.log(error);
       });
     }
+    setTimeout(() => window.location.reload(), 10);
   }
 
   writeUserData(name: string, userId: string, imgSrc: string) {

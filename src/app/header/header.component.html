@@ -31,9 +31,10 @@
         <button class="btn btn-dark me-2" (click)="showNotifications()">
             <i class="bi bi-bell fs-3"></i>
         </button>
-        <h3 class="align-self-center p-0 m-0" *ngIf="isLoggedIn">{{userName}}</h3>
+        <h3 class="align-self-center p-0 m-0" *ngIf="this.isLoggedIn" [innerHTML]="userName">Some Name here</h3>
         <button class="btn btn-dark me-4" (click)="logoutAccount()">
-            <i class="bi bi-person-circle fs-3"></i>
+            <i class="bi bi-person-circle fs-3" *ngIf="!validate"></i>
+            <img [src]="profileImage" alt="Profile" *ngIf="validate">
         </button>
     </div>
 

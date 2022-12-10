@@ -59,6 +59,10 @@ export class HomeComponent implements OnInit {
     // this.hellllYeahh();
     this.dataFromDB = this.api.readVideoData();
     setTimeout(() => console.info(this.dataFromDB), 2000);
+    setTimeout(() => {
+      this.file = this.api.auth.currentUser?.displayName;
+      console.log('UD', this.file);
+    }, 1000);
     // sessionStorage.setItem('UID', String(null));
     // setInterval(() => {
     //   this.sideNaveState = (sessionStorage.getItem('sideNav') == 'true') ? false : true;
@@ -156,7 +160,7 @@ export class HomeComponent implements OnInit {
   findTime(prevDate: any) {
     var currDate = new Date().getTime();
     var result;
-    console.log({ prevDate, currDate });
+    // console.log({ prevDate, currDate });
     var diffInMs = getDifferenceInMs(prevDate, currDate);
     var seconds = Math.floor(diffInMs / 1000);
     var minutes = Math.floor(seconds / 60);
@@ -165,7 +169,7 @@ export class HomeComponent implements OnInit {
     var weeks = Math.floor(days / 7);
     var months = Math.floor(days / 30);
     var years = Math.floor(months / 12);
-    console.log({ years, months, weeks, days, hours, minutes, seconds });
+    // console.log({ years, months, weeks, days, hours, minutes, seconds });
     if (years != 0) {
       result = years + " ";
       result += (years == 1) ? "year" : "years";

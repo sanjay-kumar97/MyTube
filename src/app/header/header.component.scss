@@ -1,31 +1,43 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
 #mid {
     border: 1px solid white;
     border-radius: 25px;
+
     input {
         border: none;
         color: white;
+
         &:focus {
             outline: none;
         }
     }
+
     &:focus-within {
         border-color: rgb(0, 170, 255);
     }
 }
+
 #btnSearch {
     border-radius: 0px 15px 15px 0px;
     border-color: transparent;
     border-left: 1px solid white;
+
     &:focus {
         box-shadow: none;
         outline: black;
     }
 }
+
 #end {
     .btn {
         align-self: center;
     }
+}
+
+img {
+    border-radius: 50%;
+    max-height: 2rem;
 }
