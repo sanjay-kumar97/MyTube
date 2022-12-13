@@ -36,7 +36,7 @@
                         <p class="user" [innerText]="'Uploaded By ' + userFromDB[video.userId].name "></p>
                         <div class="d-flex ms-auto align-items-center">
                             <input class="me-2" id="heart" type="checkbox" value="click"
-                                (change)="getLike(video, $event)">
+                                [checked]="likedVids.includes(video.videoId)" (change)="getLike(video, $event)">
                             <p [innerText]="video.likes + ' Likes'"></p>
                         </div>
                     </div>

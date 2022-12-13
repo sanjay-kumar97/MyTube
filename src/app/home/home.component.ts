@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn!: boolean;
   isOnline: boolean = true;
   userFromDB: any;
+  likedVids!: String[];
 
   ngOnInit(): void {
     if (!navigator.onLine) {
@@ -67,7 +68,7 @@ export class HomeComponent implements OnInit {
       this.dataFromDB = this.api.readVideoData();
       this.OriginalDataFromDB = this.api.readVideoData();
       this.userFromDB = this.api.readUserData();
-      setTimeout(() => console.info(this.dataFromDB, this.userFromDB), 2000);
+      setTimeout(() => { console.log(this.dataFromDB, this.userFromDB); this.likedVids = this.userFromDB['' + this.api.getUserDetails().UID].liked; console.log('HELLLOOOOOO', this.likedVids); }, 2000);
       setTimeout(() => {
         this.file = this.api.auth.currentUser?.displayName;
         console.log('UD', this.file);
@@ -268,22 +269,40 @@ export class HomeComponent implements OnInit {
     // const x = document.getElementsByTagName('iframe')[0].contentWindow.getElementsByTagName('video');
     // console.log(video);
 
-
-    console.log(e.target.checked, this.dataFromDB);
+    // var data: any = this.api.readUserData();
+    var uid = '' + this.api.getUserDetails().UID;
+    var likedArr = this.userFromDB[uid].liked;
+    if (likedArr[0] == "") {
+      console.log('NULLLLLLL');
+      likedArr.shift();
+    }
+    console.log(e.target.checked, this.dataFromDB, likedArr);
     if (e.target.checked) {
       if (!this.isLoggedIn) {
         sessionStorage.setItem('Prev', 'Home');
         this.route.navigate(['SignIn']);
         this.dataFromDB[vidID.videoId].likes += 1;
+        this.userFromDB[uid].liked.push(vidID.videoId);
       } else {
         this.dataFromDB[vidID.videoId].likes += 1;
+        likedArr.push(vidID.videoId);
+        console.log('Liked', this.userFromDB, likedArr);
       }
     } else {
       this.dataFromDB[vidID.videoId].likes -= 1;
+      // likedArr.pop();
+      likedArr.splice(likedArr.indexOf(vidID.videoId), 1);
+      console.log('Disliked', this.userFromDB, likedArr);
     }
     var vid = this.OriginalDataFromDB[vidID.videoId];
     // console.log(vid.url, vid.title, vid.videoId);
     this.api.writeVideoData(vid.url, vid.title, vid.videoId, vid.description, this.dataFromDB[vidID.videoId].likes, vid.userId, vid.time);
+
+    // setTimeout(() => {
+    var user = this.userFromDB[uid];
+    if (likedArr.length == 0) { likedArr.push(''); }
+    this.api.writeUserData(user.name, uid, likedArr, user.viewed, user.uploaded, user.joined);
+    // }, 2000);
     // let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
     // console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
     // // console.log('VidID', this.dataFromDB[vidID.videoId].title, vidID.views, this.dataFromDB[vidID.videoId].likes, vidID.time, vidID.description, this.urlMap.get(vidID.videoId));

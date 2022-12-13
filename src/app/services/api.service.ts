@@ -15,12 +15,15 @@ export class ApiService {
 
   signInWithGoogle(page: any) {
     const provider = new GoogleAuthProvider();
+    var data = this.readUserData();
     signInWithPopup(this.auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = result.user;
-        this.writeUserData(user.displayName, user.uid);
+        if (!Object.keys(data).includes(user.uid)) {
+          this.writeUserData(user.displayName, user.uid, [''], [''], [''], new Date().getTime());
+        }
         console.log({ token, user });
         this.route.navigate([page]);
         if (user.displayName) {
@@ -69,14 +72,14 @@ export class ApiService {
     setTimeout(() => window.location.reload(), 10);
   }
 
-  writeUserData(name: any, userId: any) {
+  writeUserData(name: any, userId: any, liked: String[], viewed: String[], uploaded: String[], time: number) {
     db.set(db.ref(this.database, 'users/' + userId), {
       name: name,
       userId: userId,
-      viewed: [''],
-      liked: [''],
-      uploaded: [''],
-      joined: new Date().getTime()
+      viewed: viewed,
+      liked: liked,
+      uploaded: uploaded,
+      joined: time
     });
   }
 

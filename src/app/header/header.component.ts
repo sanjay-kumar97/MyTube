@@ -64,7 +64,13 @@ export class HeaderComponent implements OnInit {
     //   document.body.appendChild(el);
     // }
     // this.validate = !this.validate;
-    this.ngOnInit();
+    // this.ngOnInit();
+    // this.api.writeUserLikedData(["fd102256-e90c-40ae-b4fb-1b3a2212f423", "b52958eb-4e7d-4e6b-ab1e-4fdf68d0ed6c"], "hfrCTBJkVLeVjpR6j9PFzceVq6j1");
+    // var data: any = this.api.readUserData();
+    // var uid = '' + this.api.getUserDetails().UID;
+    // setTimeout(() => {
+    //   this.api.writeUserData(data[uid].name, uid, ['fd102256-e90c-40ae-b4fb-1b3a2212f423'], [''], [''], data[uid].joined);
+    // }, 2000);
   }
 
   navigateToUploadVideoPage() {
