@@ -21,11 +21,6 @@ iframe {
   grid-template-columns: repeat(5, 1fr);
 }
 
-input {
-  margin: 0;
-  transform: translateY(-50%);
-}
-
 .offline {
   min-height: 80vh;
 
@@ -97,6 +92,46 @@ input {
 
         .user {
           grid-column: span 2;
+        }
+
+        input[type="checkbox"] {
+          width: 10px;
+          height: 10px;
+          outline: none;
+          margin: 0;
+          padding: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          appearance: none;
+          transform: rotate(45deg) translateX(-75%);
+          border-radius: 0px 0px 1px 0px;
+        }
+
+        input[type="checkbox"]::before {
+          position: absolute;
+          content: "";
+          background-color: rgba(0, 0, 0, 0.5);
+          height: 60%;
+          width: 100%;
+          top: -57%;
+          border-radius: 75px 75px 0px 0px;
+        }
+
+        input[type="checkbox"]::after {
+          position: absolute;
+          content: "";
+          background-color: rgba(0, 0, 0, 0.5);
+          height: 60%;
+          width: 100%;
+          top: 20%;
+          right: 79%;
+          transform: rotate(-90deg);
+          border-radius: 75px 75px 0px 0px;
+        }
+
+        input[type="checkbox"]:checked,
+        input:checked[type="checkbox"]::before,
+        input:checked[type="checkbox"]::after {
+          background-color: red;
         }
       }
     }
