@@ -1,0 +1,36 @@
+.whole {
+    min-height: 93.5vh;
+
+    .videoContainer {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+        .video {
+            min-width: 18vw;
+
+            p {
+                width: fit-content;
+                align-self: center;
+            }
+
+            video {
+                max-width: 15vw;
+            }
+
+            .details {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+
+                .title {
+                    grid-column: span 2;
+                }
+
+                .user {
+                    grid-column: span 2;
+                }
+            }
+        }
+    }
+}

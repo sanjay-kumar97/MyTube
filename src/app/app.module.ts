@@ -28,6 +28,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { LibraryComponent } from './library/library.component';
+import { TestLayoutComponent } from './test-layout/test-layout.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LibraryComponent } from './library/library.component';
     SidebarComponent,
     UploadVideoComponent,
     SignInComponent,
-    LibraryComponent
+    LibraryComponent,
+    TestLayoutComponent
   ],
   imports: [
     BrowserModule,
