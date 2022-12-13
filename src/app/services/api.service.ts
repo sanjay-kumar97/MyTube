@@ -101,13 +101,13 @@ export class ApiService {
     db.remove(db.ref(this.database, 'users/' + userId));
   }
 
-  writeVideoData(url: string, title: string, videoId: string, description: string, likes: number, userId: any) {
+  writeVideoData(url: string, title: string, videoId: string, description: string, likes: number, userId: any, time: number) {
     db.set(db.ref(this.database, 'videos/' + videoId), {
       title: title,
       url: url,
       views: 0,
       likes: likes,
-      time: new Date().getTime(),
+      time: time,
       description: description,
       userId: userId,
       videoId: videoId
@@ -154,7 +154,7 @@ export class ApiService {
           .then((downloadURL) => {
             console.log('File uploaded to', downloadURL);
             videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, 0, this.auth.currentUser?.uid); }, 2000);
+            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, 0, this.auth.currentUser?.uid, new Date().getTime()); }, 2000);
           });
       }
     )

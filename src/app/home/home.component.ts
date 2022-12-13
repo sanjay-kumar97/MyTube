@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   videoId = '';
   file: any;
   dataFromDB: any;
+  OriginalDataFromDB: any;
   loader: boolean = true;
   // showTitle: boolean = false;
   myUrl!: SafeResourceUrl;
@@ -64,11 +65,13 @@ export class HomeComponent implements OnInit {
       // }, 5000);
       // this.hellllYeahh();
       this.dataFromDB = this.api.readVideoData();
+      this.OriginalDataFromDB = this.api.readVideoData();
       this.userFromDB = this.api.readUserData();
       setTimeout(() => console.info(this.dataFromDB, this.userFromDB), 2000);
       setTimeout(() => {
         this.file = this.api.auth.currentUser?.displayName;
         console.log('UD', this.file);
+        this.isLoggedIn = this.api.isLoggedIn();
       }, 1000);
       // sessionStorage.setItem('UID', String(null));
       // setInterval(() => {
@@ -269,6 +272,7 @@ export class HomeComponent implements OnInit {
     console.log(e.target.checked, this.dataFromDB);
     if (e.target.checked) {
       if (!this.isLoggedIn) {
+        sessionStorage.setItem('Prev', 'Home');
         this.route.navigate(['SignIn']);
         this.dataFromDB[vidID.videoId].likes += 1;
       } else {
@@ -277,6 +281,9 @@ export class HomeComponent implements OnInit {
     } else {
       this.dataFromDB[vidID.videoId].likes -= 1;
     }
+    var vid = this.OriginalDataFromDB[vidID.videoId];
+    // console.log(vid.url, vid.title, vid.videoId);
+    this.api.writeVideoData(vid.url, vid.title, vid.videoId, vid.description, this.dataFromDB[vidID.videoId].likes, vid.userId, vid.time);
     // let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
     // console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
     // // console.log('VidID', this.dataFromDB[vidID.videoId].title, vidID.views, this.dataFromDB[vidID.videoId].likes, vidID.time, vidID.description, this.urlMap.get(vidID.videoId));
