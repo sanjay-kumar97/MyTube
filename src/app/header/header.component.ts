@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
       if (this.api.auth.currentUser) {
         this.validate = true;
       }
-    }, 1000);
+    }, 2000);
     // this.isLoggedIn = (sessionStorage.getItem('userName') != "") ? true : false;
     console.log(this.isLoggedIn);
 
@@ -92,6 +92,7 @@ export class HeaderComponent implements OnInit {
       this.api.signOut();
       this.route.navigate(['Home']);
     } else {
+      sessionStorage.setItem('Prev', 'Home');
       this.route.navigate(['SignIn']);
     }
     // setTimeout(() => window.location.reload(), 10);

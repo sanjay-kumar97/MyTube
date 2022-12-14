@@ -1,5 +1,17 @@
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 92vh;">
+<!-- <div class="container-fluid mt-6 .wholeCont">
+    <p>Progress: {{progress}}</p>
+    <div class="progress">
+        <div class="progress-done" id="bar">
+        </div>
+    </div>
+</div> -->
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 75vh;">
+
     <div class="text-center p-5 d-flex flex-column align-items-center col-4" style="min-height: 25vh;">
+        <div class="progress">
+            <div class="progress-done" id="bar">
+            </div>
+        </div>
         <input type="text" (keyup)="getTitle($event)" placeholder="Enter Video Title" class="form-control mb-3 fs-5">
         <textarea class="form-control my-3 fs-5" rows="5" placeholder="Give your video a Description"
             (keyup)="getDescription($event)"></textarea>
@@ -7,7 +19,6 @@
         <input type="submit" (click)="addToStorage()" class="btn btn-danger my-3 fs-5 py-2 px-4" value="Upload Video">
     </div>
 </div>
-
 <!-- <div class="container-fluid text-center">
     <div class="row mx-auto">
         <div class="col-6 bg-danger">

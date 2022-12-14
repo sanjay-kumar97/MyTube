@@ -29,6 +29,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { LibraryComponent } from './library/library.component';
 import { TestLayoutComponent } from './test-layout/test-layout.component';
+import { VideoComponent } from './video/video.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TestLayoutComponent } from './test-layout/test-layout.component';
     UploadVideoComponent,
     SignInComponent,
     LibraryComponent,
-    TestLayoutComponent
+    TestLayoutComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

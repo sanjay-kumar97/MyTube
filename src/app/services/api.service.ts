@@ -31,11 +31,12 @@ export class ApiService {
         }
         setTimeout(() => window.location.reload(), 1000);
       }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.info(errorCode, errorMessage);
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // const email = error.customData.email;
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        // console.info(errorCode, errorMessage);
+        console.log('Error', error);
       });
   }
 
@@ -147,6 +148,7 @@ export class ApiService {
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
+        sessionStorage.setItem('Progress', progress.toString());
         // console.log('Upload Done', snapshot);
       },
       (error) => {

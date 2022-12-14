@@ -24,6 +24,7 @@
     "@types/bootstrap": "^5.2.6",
     "angular-filepicker": "^1.1.4",
     "bootstrap": "^5.2.3",
+    "gsap": "^3.11.3",
     "ngx-skeleton-loader": "^6.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

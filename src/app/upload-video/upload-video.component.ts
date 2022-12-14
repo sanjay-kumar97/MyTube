@@ -1,5 +1,8 @@
+import { NgStyle } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Alert } from 'bootstrap';
+import gsap from 'gsap';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -16,6 +19,7 @@ export class UploadVideoComponent implements OnInit {
   links: any;
   userId: any;
   videoData = { 'title': '', 'videoId': '', 'description': '' };
+  progress: any = '';
 
   ngOnInit(): void {
     this.getLinks();
@@ -91,8 +95,28 @@ export class UploadVideoComponent implements OnInit {
     // this.getLinks();
 
     // this.videoLinks.push(this.myUrl);
+    const progressbar: HTMLElement | null = document.getElementById('bar');
+    progressbar!.style.visibility = 'visible';
+    sessionStorage.setItem('Progress', '0');
+    this.progress = sessionStorage.getItem('Progress');
+    setTimeout(() => {
+      this.api.writeToStorage(this.file, this.videoData);
+      const trackProgress = setInterval(() => {
+        this.progress = parseInt("" + sessionStorage.getItem('Progress'));
+        progressbar!.style.width = `${Math.floor(this.progress)}%`;
+        progressbar!.innerText = `${Math.ceil(this.progress)}%`;
+        if (this.progress === 100) {
+          console.log('Done Done Done Done Done!!!!!!!');
+          clearInterval(trackProgress);
+          this.progress = '';
+          document.getElementsByTagName('input')[1].value = '';
+          document.getElementsByTagName('textarea')[0].value = '';
+          document.getElementsByTagName('input')[2].value = '';
+          progressbar!.innerText = 'Upload Done!';
+        }
+      }, 100);
+    }, 2000);
 
-    setTimeout(() => this.api.writeToStorage(this.file, this.videoData), 2000);
     // const storageRef = st.ref(this.storage, this.file.name);
     // const uploadTask = st.uploadBytesResumable(storageRef, this.file);
     // uploadTask.on('state_changed',

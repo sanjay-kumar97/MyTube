@@ -16,6 +16,7 @@ export class LibraryComponent implements OnInit {
   localMap: any;
   loader: boolean = true;
   userDetails!: any;
+  isEmpty: boolean = false;
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -57,11 +58,12 @@ export class LibraryComponent implements OnInit {
         }
         console.log(videoMap);
       }
-      setTimeout(() => { this.localMap = videoMap; console.log(this.localMap); setTimeout(() => this.loader = false), 100; }, 2000);
+      setTimeout(() => { this.localMap = videoMap; this.isEmpty = videoMap.size == 0 ? true : false; console.log(this.localMap, this.isEmpty); setTimeout(() => this.loader = false), 100; }, 2000);
     }, 2000)
   }
 
   getValues(map: any[]) {
+    // this.isEmpty = Array.from(map.values()).length == 0 ? true : false;
     return Array.from(map.values());
   }
 

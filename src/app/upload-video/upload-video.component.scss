@@ -1,0 +1,22 @@
+.progress {
+    background-color: grey;
+    border-radius: 20px;
+    height: 30px;
+    width: 22.5%;
+    position: absolute;
+    top: 75%;
+    visibility: hidden;
+}
+
+.progress-done {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: repeating-linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    box-shadow: 0 5px 5px -6px rgba(0, 0, 0, 0), 0 3px 7px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    color: white;
+    height: 100%;
+    width: 0;
+    transition: 1s ease 0.3s;
+}

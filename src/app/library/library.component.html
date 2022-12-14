@@ -6,12 +6,15 @@
 </div>
 <div class="container-fluid d-flex flex-column align-items-start gap-3 m-4" *ngIf="!loader">
     <p class="display-2">My Uploads</p>
-    <div class="d-flex col-3" *ngFor="let video of getValues(localMap)" style="padding-bottom: 2.75rem;">
-        <video [src]="video.url" height="75" width="120" style="background-color: #000;"></video>
-        <div class="d-flex flex-column">
-            <h1 [innerHTML]="video.title" class="ms-4"></h1>
-            <button class="btn btn-danger ms-4 me-auto" (click)="deleteVideo(video.title, video.videoId)">Delete
-                Video</button>
+    <h2 *ngIf="isEmpty">You have not uploaded any Video yet.. Upload a Video!</h2>
+    <ng-container *ngIf="!isEmpty">
+        <div class="d-flex col-3" *ngFor="let video of getValues(localMap)" style="padding-bottom: 2.75rem;">
+            <video [src]="video.url" height="75" width="120" style="background-color: #000;"></video>
+            <div class="d-flex flex-column">
+                <h1 [innerHTML]="video.title" class="ms-4"></h1>
+                <button class="btn btn-danger ms-4 me-auto" (click)="deleteVideo(video.title, video.videoId)">Delete
+                    Video</button>
+            </div>
         </div>
-    </div>
+    </ng-container>
 </div>
