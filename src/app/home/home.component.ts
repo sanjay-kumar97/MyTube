@@ -321,9 +321,17 @@ export class HomeComponent implements OnInit {
     // }, 3000);
   }
 
-  getView(e: Event) {
-    // const x = document.getElementsByTagName('iframe')[0];
-    // console.log(e, x.contentWindow?.document.getElementsByClassName('controls')[0]);
+  previewVideo(id: number) {
+    console.log('Started Playing', id);
+    var x = document.getElementsByTagName('video')[id];
+    x.muted = true;
+    x.play();
+  }
+
+  stopPreview(id: number) {
+    console.log('Stopped Playing', id);
+    var x = document.getElementsByTagName('video')[id];
+    x.load();
   }
 
   addData(event: Event) {

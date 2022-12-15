@@ -74,14 +74,15 @@ iframe {
       }
 
       video {
-        width: 15.25vw;
+        width: 100%;
         height: 8vw;
         border-radius: 10px;
         background-color: black;
+        cursor: pointer;
       }
 
       .details {
-        width: 16vw;
+        width: 100%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
@@ -100,6 +101,7 @@ iframe {
           outline: none;
           margin: 0;
           padding: 0;
+          cursor: pointer;
           background-color: rgba(0, 0, 0, 0.25);
           appearance: none;
           transform: rotate(45deg) translateX(-75%);
