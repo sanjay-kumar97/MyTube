@@ -30,6 +30,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { LibraryComponent } from './library/library.component';
 import { TestLayoutComponent } from './test-layout/test-layout.component';
 import { VideoComponent } from './video/video.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { VideoComponent } from './video/video.component';
     SignInComponent,
     LibraryComponent,
     TestLayoutComponent,
-    VideoComponent
+    VideoComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

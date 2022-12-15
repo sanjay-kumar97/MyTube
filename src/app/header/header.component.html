@@ -1,11 +1,14 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark px-1 d-flex">
-    <div class="side-nav-button p-2 me-3 text-light">
-        <button class="btn btn-dark py-0" (click)="sideNavToggle()">
-            <i class="bi bi-list fs-2"></i>
-        </button>
+<nav class="navbar navbar-expand navbar-dark bg-dark px-1 d-flex justify-content-between">
+    <div class="one d-flex col-4">
+        <div class="side-nav-button p-2 me-3 text-light">
+            <button class="btn btn-dark py-0" (click)="sideNavToggle()">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+        </div>
+        <i class="bi bi-youtube text-danger fs-2 my-auto lh-1"></i>
+        <h3 class="navbar-brand px-2 fs-3 my-auto" (click)="navigateToHomePage()" style="cursor: pointer;">MyTube</h3>
     </div>
-    <i class="bi bi-youtube text-danger fs-2 my-auto lh-1"></i>
-    <h3 class="navbar-brand px-2 fs-3 my-auto" (click)="navigateToHomePage()" style="cursor: pointer;">MyTube</h3>
+
     <!-- <div class="navbar-collapse">
         <ul class="navbar-nav me-auto">
             <li class="nav-item dropdown">
@@ -13,29 +16,33 @@
             </li>
         </ul>
     </div> -->
-    <span class="example-spacer"></span>
-    <div class="text-light col-3 d-flex justify-content-between" id="mid">
+    <!-- <span class="example-spacer"></span> -->
+
+    <div class="two text-light col-3 d-flex justify-content-center">
         <i class="bi bi-search my-auto ms-4" *ngIf="searchIcon"></i>
         <input type="text" class="col-10 bg-transparent mx-auto py-1 px-2" placeholder="Search" (focus)="showIcon()"
             (focusout)="hideIcon()">
-        <button class="btn btn-outline-light" id="btnSearch">
+        <button class="btn btn-outline-light" id="btnSearch" type="submit">
             <i class="bi bi-search"></i>
         </button>
         <!-- <i class="bi bi-search my-auto me-2 px-2 py-1" style="border-left: 1px solid white;"></i> -->
     </div>
-    <span class="example-spacer"></span>
-    <div class="text-light col-2 d-flex justify-content-end" id="end">
+    <!-- <span class="example-spacer"></span> -->
+
+    <div class="three text-light col-4 d-flex justify-content-end">
         <button class="btn btn-dark me-2" (click)="navigateToUploadVideoPage()">
             <i class="bi bi-cloud-arrow-up fs-2"></i>
         </button>
         <button class="btn btn-dark me-2" (click)="showNotifications()">
             <i class="bi bi-bell fs-3"></i>
         </button>
-        <h3 class="align-self-center p-0 m-0" *ngIf="this.isLoggedIn" [innerHTML]="userName">Some Name here</h3>
-        <button class="btn btn-dark me-4" (click)="logoutAccount()">
+        <!-- <h3 class="align-self-center p-0 m-0" *ngIf="this.isLoggedIn" [innerHTML]="userName">Some Name here</h3> -->
+        <button class="btn btn-dark" [routerLink]="['profile', userDetails.UID]">
             <i class="bi bi-person-circle fs-3" *ngIf="!validate"></i>
             <img [src]="profileImage" alt="Profile" *ngIf="validate">
         </button>
+        <button class="btn btn-dark me-4 fs-5" [innerText]="isLoggedIn ? 'LOGOUT' : 'LOGIN'"
+            (click)="manageAccount()"></button>
     </div>
 
 </nav>

@@ -12,10 +12,11 @@ export class HeaderComponent implements OnInit {
 
   @Output() sideNavToggled: EventEmitter<any> = new EventEmitter<boolean>();
   menuState: boolean = true;
-  userName: any = "User X";
+  userName: any = "";
   isLoggedIn: boolean = false;
   validate: boolean = false;
   profileImage: any;
+  userDetails: any;
 
   constructor(private route: Router, private api: ApiService) { }
 
@@ -24,11 +25,11 @@ export class HeaderComponent implements OnInit {
 
     // this.userName = sessionStorage.getItem('userName');
     setTimeout(() => {
-      const userDetails = this.api.getUserDetails();
-      console.log('Header lol', userDetails);
+      this.userDetails = this.api.getUserDetails();
+      console.log('Header lol', this.userDetails);
       this.isLoggedIn = this.api.isLoggedIn();
-      this.profileImage = userDetails.profileImage;
-      this.userName = userDetails.displayName;
+      this.profileImage = this.userDetails.profileImage;
+      this.userName = this.userDetails.displayName;
       if (this.api.auth.currentUser) {
         this.validate = true;
       }
@@ -87,7 +88,7 @@ export class HeaderComponent implements OnInit {
     this.route.navigate(['Home']);
   }
 
-  logoutAccount() {
+  manageAccount() {
     if (this.isLoggedIn) {
       this.api.signOut();
       this.route.navigate(['Home']);
