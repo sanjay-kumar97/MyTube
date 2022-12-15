@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ApiService {
 
-  constructor(private database: db.Database, public storage: st.Storage, private route: Router) { }
+  constructor(private database: db.Database, public storage: st.Storage, private router: Router) { }
 
   auth = getAuth();
 
@@ -25,7 +25,7 @@ export class ApiService {
           this.writeUserData(user.displayName, user.uid, [''], [''], [''], new Date().getTime());
         }
         console.log({ token, user });
-        this.route.navigate([page]);
+        this.router.navigate([page]);
         if (user.displayName) {
           sessionStorage.setItem('userName', (user.displayName).toString());
         }

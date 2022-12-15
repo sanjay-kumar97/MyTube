@@ -12,7 +12,7 @@ import { ApiService } from '../services/api.service';
 })
 export class UploadVideoComponent implements OnInit {
 
-  constructor(private api: ApiService, private route: Router) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   file: any;
   dataFromDB: any;
@@ -143,7 +143,7 @@ export class UploadVideoComponent implements OnInit {
   }
 
   redirectToHome() {
-    this.route.navigate(['Home']);
+    this.router.navigate(['Home']);
   }
 
 }

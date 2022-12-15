@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   profileImage: any;
   userDetails: any;
 
-  constructor(private route: Router, private api: ApiService) { }
+  constructor(private router: Router, private api: ApiService) { }
 
   searchIcon: boolean = false;
   ngOnInit(): void {
@@ -77,24 +77,24 @@ export class HeaderComponent implements OnInit {
   navigateToUploadVideoPage() {
     if (!this.api.isLoggedIn()) {
       sessionStorage.setItem('Prev', 'Upload');
-      this.route.navigate(['SignIn']);
+      this.router.navigate(['SignIn']);
     } else {
-      this.route.navigate(['Upload']);
+      this.router.navigate(['Upload']);
     }
     // this.ngOnInit();
   }
 
   navigateToHomePage() {
-    this.route.navigate(['Home']);
+    this.router.navigate(['Home']);
   }
 
   manageAccount() {
     if (this.isLoggedIn) {
       this.api.signOut();
-      this.route.navigate(['Home']);
+      this.router.navigate(['Home']);
     } else {
       sessionStorage.setItem('Prev', 'Home');
-      this.route.navigate(['SignIn']);
+      this.router.navigate(['SignIn']);
     }
     // setTimeout(() => window.location.reload(), 10);
     this.ngOnInit();

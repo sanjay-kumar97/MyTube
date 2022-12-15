@@ -10,17 +10,17 @@ export class SidebarComponent implements OnInit {
 
   @Input() sideNavState: boolean = false;
 
-  constructor(private route: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   navigateToHome() {
-    this.route.navigate(['Home']);
+    this.router.navigate(['Home']);
   }
 
   navigateToLibrary() {
-    this.route.navigate(['library']);
+    this.router.navigate(['library']);
   }
 
 }

@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   @Output() toggleSidebarForMe: EventEmitter<boolean> = new EventEmitter();
 
   name = 'Angular';
-  constructor(private api: ApiService, private sanitizer: DomSanitizer, private route: Router) {
+  constructor(private api: ApiService, private sanitizer: DomSanitizer, private router: Router) {
     // this.api.getValue().then((data: string) => {
     //   this.name = data;
     //   console.log(data);
@@ -280,7 +280,7 @@ export class HomeComponent implements OnInit {
     if (e.target.checked) {
       if (!this.isLoggedIn) {
         sessionStorage.setItem('Prev', 'Home');
-        this.route.navigate(['SignIn']);
+        this.router.navigate(['SignIn']);
         this.dataFromDB[vidID.videoId].likes += 1;
         this.userFromDB[uid].liked.push(vidID.videoId);
       } else {
@@ -406,7 +406,7 @@ export class HomeComponent implements OnInit {
   }
 
   reloadPage() {
-    // this.route.navigate(['Home']);
+    // this.router.navigate(['Home']);
     window.location.reload();
   }
 }

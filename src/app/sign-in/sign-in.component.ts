@@ -21,7 +21,6 @@ export class SignInComponent implements OnInit {
   signInWithGoogle() {
     var page = sessionStorage.getItem('Prev');
     this.api.signInWithGoogle(page);
-    // this.route.navigate([sessionStorage.getItem('Prev')])
   }
 
 }

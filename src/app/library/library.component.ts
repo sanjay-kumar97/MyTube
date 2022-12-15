@@ -10,7 +10,7 @@ import { ApiService } from '../services/api.service';
 })
 export class LibraryComponent implements OnInit {
 
-  constructor(private api: ApiService, private sanitizer: DomSanitizer, private route: Router) { }
+  constructor(private api: ApiService, private sanitizer: DomSanitizer, private router: Router) { }
 
   dataFromDB: any;
   localMap: any;
@@ -26,7 +26,7 @@ export class LibraryComponent implements OnInit {
         this.userDetails = this.api.getUserDetails();
       } else {
         sessionStorage.setItem('Prev', 'library');
-        this.route.navigate(['SignIn']);
+        this.router.navigate(['SignIn']);
       }
     }, 2000);
     console.log('In Here');
