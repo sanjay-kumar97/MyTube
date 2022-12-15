@@ -68,7 +68,16 @@ export class LibraryComponent implements OnInit {
   }
 
   deleteVideo(videoTitle: String, videoId: String) {
+    var data: any = this.api.readUserData();
+    var uid = '' + this.userDetails.UID;
+    var uploadedArr: String[];
+    setTimeout(() => {
+      uploadedArr = data[uid].uploaded;
+      uploadedArr.splice(uploadedArr.indexOf(videoId), 1);
+      if (uploadedArr.length == 0) { uploadedArr.push(''); }
+      this.api.writeUserData(data[uid].name, data[uid].userId, data[uid].liked, data[uid].viewed, uploadedArr, data[uid].joined);
+    }, 2000);
     this.api.removeFromStorage(videoTitle, videoId);
-    setTimeout(() => this.ngOnInit(), 1000);
+    setTimeout(() => this.ngOnInit(), 3000);
   }
 }

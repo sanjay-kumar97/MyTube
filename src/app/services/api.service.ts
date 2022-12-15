@@ -25,7 +25,11 @@ export class ApiService {
           this.writeUserData(user.displayName, user.uid, [''], [''], [''], new Date().getTime());
         }
         console.log({ token, user });
-        this.router.navigate([page]);
+        if (page == 'profile') {
+          this.router.navigate([page, user.uid]);
+        } else {
+          this.router.navigate([page]);
+        }
         if (user.displayName) {
           sessionStorage.setItem('userName', (user.displayName).toString());
         }
@@ -158,6 +162,13 @@ export class ApiService {
   }
 
   writeToStorage(file: any, videoData: any) {
+    var data: any = this.readUserData();
+    var uid = '' + this.getUserDetails().UID;
+    var uploadedArr: String[];
+    setTimeout(() => {
+      uploadedArr = data[uid].uploaded;
+    }, 2000);
+
     const storageRef = st.ref(this.storage, videoData.title);
     const uploadTask = st.uploadBytesResumable(storageRef, file);
     var videoId = "";
@@ -176,7 +187,16 @@ export class ApiService {
           .then((downloadURL) => {
             console.log('File uploaded to', downloadURL);
             videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-            setTimeout(() => { console.log(videoId); this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, 0, this.auth.currentUser?.uid, new Date().getTime()); }, 2000);
+            setTimeout(() => {
+              console.log(videoId);
+              this.writeVideoData(downloadURL, videoData.title, videoId, videoData.description, 0, this.auth.currentUser?.uid, new Date().getTime());
+              uploadedArr.push(videoId);
+              if (uploadedArr[0] == "") {
+                console.log('NULLLLLLL');
+                uploadedArr.shift();
+              }
+              this.writeUserData(data[uid].name, data[uid].userId, data[uid].liked, data[uid].viewed, uploadedArr, data[uid].joined);
+            }, 2000);
           });
       }
     )
