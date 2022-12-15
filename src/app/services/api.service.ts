@@ -135,6 +135,23 @@ export class ApiService {
     return dataToReturn;
   }
 
+  readSpecificVideoData(videoId: String) {
+    const dbRef = db.ref(db.getDatabase());
+    var data, dataToReturn = {};
+    db.get(db.child(dbRef, 'videos/' + videoId)).then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+        Object.assign(dataToReturn, data);
+        console.log('from get', snapshot.val(), typeof (data));
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+    return dataToReturn;
+  }
+
   deleteVideoData(videoId: String) {
     db.remove(db.ref(this.database, 'videos/' + videoId));
     console.log('Video Removed from DB!');

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-video',
@@ -9,10 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 export class VideoComponent implements OnInit {
 
   id!: string;
-  constructor(private route: ActivatedRoute) { }
+  videoData: any;
+  constructor(private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
     this.id = "" + this.route.snapshot.paramMap.get('id');
+    this.videoData = this.api.readSpecificVideoData(this.id);
+    console.log(this.videoData);
   }
+
+
 
 }
