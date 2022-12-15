@@ -1,12 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-// import { Database, onValue, ref, set } from '@angular/fire/database';
-// import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import * as st from '@angular/fire/storage';
 import * as db from '@angular/fire/database';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-// import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-home',
@@ -68,7 +65,13 @@ export class HomeComponent implements OnInit {
       this.dataFromDB = this.api.readVideoData();
       this.OriginalDataFromDB = this.api.readVideoData();
       this.userFromDB = this.api.readUserData();
-      setTimeout(() => { console.log(this.dataFromDB, this.userFromDB); this.likedVids = this.userFromDB['' + this.api.getUserDetails().UID].liked; console.log('HELLLOOOOOO', this.likedVids); }, 2000);
+      setTimeout(() => {
+        if (this.api.isLoggedIn()) {
+          this.likedVids = this.userFromDB['' + this.api.getUserDetails().UID].liked;
+          console.log('HELLLOOOOOO', this.likedVids);
+        }
+      }, 2000);
+      setTimeout(() => { console.log(this.dataFromDB, this.userFromDB); }, 2000);
       setTimeout(() => {
         this.file = this.api.auth.currentUser?.displayName;
         console.log('UD', this.file);
@@ -322,15 +325,14 @@ export class HomeComponent implements OnInit {
   }
 
   previewVideo(id: number) {
-    console.log('Started Playing', id);
+    console.log('Started Previewing', id);
     var x = document.getElementsByTagName('video')[id];
     x.muted = true;
     x.play();
-    setTimeout(() => x.load(), 10000);
   }
 
   stopPreview(id: number) {
-    console.log('Stopped Playing', id);
+    console.log('Stopped Previewing', id);
     var x = document.getElementsByTagName('video')[id];
     x.load();
   }
@@ -343,70 +345,15 @@ export class HomeComponent implements OnInit {
     console.log(new Date(1669142885888));
   }
 
-  // writeVideoData(url: string, title: string, videoId: string, description: string, timestamp: number, likes: number) {
-  //   db.set(db.ref(this.database, 'videos/' + videoId), {
-  //     title: title,
-  //     url: url,
-  //     views: 0,
-  //     likes: likes,
-  //     time: timestamp,
-  //     description: description,
-  //     userId: 'ID',
-  //     videoId: videoId
-  //   });
-  //   // this.videoId += 1;
-  // }
-
   addToStorage() {
     setTimeout(() => this.getLinks(), 2000);
-    // var inputs = document.getElementsByTagName('input');
-    // let uid = inputs[1].value;
-    // let vid = inputs[2].value;
-    // console.log({ uid, vid });
-    // inputs[1].value = '';
-    // inputs[2].value = '';
-    // let vids = [];
-    // let size = Object.keys(this.data).length;
-    // console.log('Data from Push', Object.keys(this.data), typeof (this.data), size);
-    // for (let i = 0; i < size; i++) {
-    //   console.log('From loop', this.data[i]);
-    // }
-    // vids.push(vid);
-    // if (uid != '' && vid != '') {
-    //   this.dbService.writeData('users/' + uid, vids);
-    // } else {
-    //   console.log('Err in adding to db');
-    // }
-    // this.getLinks();
-
     this.videoLinks.push(this.myUrl);
-
-    //   const storageRef = st.ref(this.storage, this.file.name);
-    //   const uploadTask = st.uploadBytesResumable(storageRef, this.file);
-    //   uploadTask.on('state_changed',
-    //     (snapshot) => {
-    //       console.log('Upload Done');
-    //     },
-    //     (error) => {
-    //       console.log(error.message);
-    //     },
-    //     () => {
-    //       st.getDownloadURL(uploadTask.snapshot.ref)
-    //         .then((downloadURL) => {
-    //           console.log('File uploaded to', downloadURL);
-    //           this.videoId = downloadURL.slice(downloadURL.indexOf("token=") + 6);
-    //           setTimeout(() => { console.log(this.videoId); this.writeUserData(downloadURL, this.file.name, this.videoId); }, 2000);
-    //         });
-    //     }
-    //   )
-    //   console.log(this.file);
 
     // let timestamp = new Date().getTime()
     // console.log(new Date(timestamp)); methods -> .toDateString() / .toLocaleDateString() / .toLocaleTimeString()
   }
 
   reloadPage() {
-    // this.router.navigate(['Home']);
     window.location.reload();
   }
 }
