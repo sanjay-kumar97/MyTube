@@ -84,6 +84,15 @@ export class HeaderComponent implements OnInit {
     // this.ngOnInit();
   }
 
+  navigateToProfilePage() {
+    if (!this.api.isLoggedIn()) {
+      sessionStorage.setItem('Prev', 'profile');
+      this.router.navigate(['SignIn']);
+    } else {
+      this.router.navigate(['profile', this.userDetails.UID]);
+    }
+  }
+
   navigateToHomePage() {
     this.router.navigate(['Home']);
   }
