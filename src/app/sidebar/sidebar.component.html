@@ -1,16 +1,20 @@
 <div class="side-nav-content text-light py-2">
     <ul class="nav-list p-4" [ngClass]="{'nav-open': sideNavState}">
-        <li class="nav-list-item pt-0 mt-0 d-flex gap-3" (click)="navigateToHome()">
+        <li class="nav-list-item mt-0 d-flex gap-3" (click)="navigateToHome()">
             <i class="bi bi-house-door fs-2 py-2 d-block my-auto"></i>
-            <span class="fs-4 d-block my-auto ms-4">Home</span>
+            <span class="fs-3 d-block my-auto ms-4">Home</span>
         </li>
-        <li class="nav-list-item mt-4 d-flex gap-3">
+        <!-- <li class="nav-list-item mt-4 d-flex gap-3">
             <i class="bi bi-collection-play fs-2 py-2 d-block my-auto"></i>
             <span class="fs-4 d-block my-auto ms-4">Subscription</span>
+        </li> -->
+        <li class="nav-list-item mt-4 d-flex gap-3" (click)="navigateToLibrary()">
+            <i class="bi bi-collection-play fs-2 py-2 d-block my-auto"></i>
+            <span class="fs-3 d-block my-auto ms-4">Library</span>
         </li>
-        <li class="nav-list-item mt-4 d-flex gap-3 py-3" (click)="navigateToLibrary()">
-            <mat-icon class="fs-2">video_library</mat-icon>
-            <span class="fs-4 d-block my-auto ms-4">Library</span>
+        <li class="nav-list-item mt-4 d-flex gap-3" (click)="navigateToLibrary()">
+            <i class="bi bi-clock-history fs-2 py-2 d-block my-auto"></i>
+            <span class="fs-3 d-block my-auto ms-4">History</span>
         </li>
     </ul>
 </div>
