@@ -326,6 +326,7 @@ export class HomeComponent implements OnInit {
     var x = document.getElementsByTagName('video')[id];
     x.muted = true;
     x.play();
+    setTimeout(() => x.load(), 10000);
   }
 
   stopPreview(id: number) {
