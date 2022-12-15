@@ -11,14 +11,19 @@ export class ProfileComponent implements OnInit {
 
   id!: string;
   videoData: any;
+  loader: boolean = true;
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.id = "" + this.route.snapshot.paramMap.get('id');
-    if (!this.api.isLoggedIn()) {
-      sessionStorage.setItem('Prev', 'profile');
-      this.router.navigate(['SignIn']);
-    }
+    setTimeout(() => {
+      if (!this.api.isLoggedIn()) {
+        sessionStorage.setItem('Prev', 'profile');
+        this.router.navigate(['SignIn']);
+      } else {
+        this.loader = false;
+      }
+    }, 2000);
   }
 
 }
