@@ -23,4 +23,7 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(['library']);
   }
 
+  navigateToHistory() {
+    this.router.navigate(['history']);
+  }
 }
