@@ -299,7 +299,7 @@ export class HomeComponent implements OnInit {
     }
     var vid = this.OriginalDataFromDB[vidID.videoId];
     // console.log(vid.url, vid.title, vid.videoId);
-    this.api.writeVideoData(vid.url, vid.title, vid.videoId, vid.description, this.dataFromDB[vidID.videoId].likes, vid.userId, vid.time);
+    this.api.writeVideoData(vid.url, vid.title, vid.videoId, vid.description, this.dataFromDB[vidID.videoId].likes, vid.views, vid.userId, vid.time);
 
     // setTimeout(() => {
     var user = this.userFromDB[uid];
