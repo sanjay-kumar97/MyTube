@@ -31,6 +31,7 @@ import { LibraryComponent } from './library/library.component';
 import { TestLayoutComponent } from './test-layout/test-layout.component';
 import { VideoComponent } from './video/video.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProfileComponent } from './profile/profile.component';
     LibraryComponent,
     TestLayoutComponent,
     VideoComponent,
-    ProfileComponent
+    ProfileComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
 
@@ -7,10 +7,11 @@ import { ApiService } from '../services/api.service';
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, OnDestroy {
 
   id!: string;
   videoData: any;
+  timer: any;
   constructor(private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
@@ -22,6 +23,10 @@ export class VideoComponent implements OnInit {
         this.checkView();
       }
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
   }
 
   checkView() {
@@ -36,13 +41,13 @@ export class VideoComponent implements OnInit {
         viewedArr.shift();
       }
     }, 2000);
-    const x = setInterval(() => {
+    this.timer = setInterval(() => {
       let current = Math.floor(player.currentTime);
       let total = Math.floor(player.duration / 2);
       console.log({ total, current });
       if (current == total) {
         console.log('COUNTED AS A VIEW!');
-        clearInterval(x);
+        clearInterval(this.timer);
         this.videoData.views += 1;
         viewedArr.push(this.id);
         this.api.writeUserData(userData[uid].name, uid, userData[uid].liked, viewedArr, userData[uid].uploaded, userData[uid].joined,);
