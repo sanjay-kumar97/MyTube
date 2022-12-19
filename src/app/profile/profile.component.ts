@@ -10,6 +10,7 @@ import { ApiService } from '../services/api.service';
 export class ProfileComponent implements OnInit {
 
   id!: string;
+  user: any;
   videoData: any;
   loader: boolean = true;
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
@@ -21,9 +22,14 @@ export class ProfileComponent implements OnInit {
         sessionStorage.setItem('Prev', 'profile');
         this.router.navigate(['SignIn']);
       } else {
-        this.loader = false;
+        this.user = this.api.readSpecificUserData(this.id);
+        setTimeout(() => this.loader = false, 1000);
       }
     }, 2000);
+  }
+
+  getDate(date: number) {
+    return new Date(date).toDateString();
   }
 
 }

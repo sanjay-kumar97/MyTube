@@ -4,3 +4,11 @@
         <div></div>
     </div>
 </div>
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 93vh;" *ngIf="!loader">
+    <div class="d-flex justify-content-center align-items-center flex-column gap-3 wrapper">
+        <img [src]="user.profileImage" alt="Profile Image Here">
+        <p [innerHTML]="user.name" class="display-3"></p>
+        <p [innerHTML]="'Date Joined: '+getDate(user.joined)" class="display-6"></p>
+    </div>
+</div>
