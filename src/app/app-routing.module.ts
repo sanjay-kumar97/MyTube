@@ -12,7 +12,7 @@ import { VideoComponent } from './video/video.component';
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
   { path: 'Home', component: HomeComponent },
-  { path: 'view/:id', component: VideoComponent },
+  { path: 'watch/:id', component: VideoComponent },
   { path: 'Upload', component: UploadVideoComponent },
   { path: 'SignIn', component: SignInComponent },
   { path: 'profile/:id', component: ProfileComponent },

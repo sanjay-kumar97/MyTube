@@ -102,3 +102,26 @@
     }
   }
 }
+
+// @media only screen and (min-width: 768px) {
+//   .videoContainer {
+//     background-color: red !important;
+//     grid-template-columns: repeat(3, 1fr) !important;
+//   }
+// }
+
+// /* Large devices (laptops/desktops, 992px and up) */
+// @media only screen and (min-width: 992px) {
+//   .videoContainer {
+//     background-color: green !important;
+//     grid-template-columns: repeat(4, 1fr) !important;
+//   }
+// }
+
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media only screen and (min-width: 1200px) {
+//   .videoContainer {
+//     background-color: blue;
+//     grid-template-columns: repeat(5, 1fr) !important;
+//   }
+// }

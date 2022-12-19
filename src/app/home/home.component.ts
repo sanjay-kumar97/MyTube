@@ -304,7 +304,7 @@ export class HomeComponent implements OnInit {
     // setTimeout(() => {
     var user = this.userFromDB[uid];
     if (likedArr.length == 0) { likedArr.push(''); }
-    this.api.writeUserData(user.name, uid, likedArr, user.viewed, user.uploaded, user.joined);
+    this.api.writeUserData(user.name, uid, user.profileImage, likedArr, user.viewed, user.uploaded, user.notifications, user.joined);
     // }, 2000);
     // let url = this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity;
     // console.log(this.dataFromDB[vidID.videoId].url.changingThisBreaksApplicationSecurity);
