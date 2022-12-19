@@ -1,11 +1,17 @@
-<div class="mainContainer container-fluid d-flex justify-content-around flex-column align-items-center">
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="loader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<div class="mainContainer container-fluid d-flex justify-content-around flex-column align-items-center" *ngIf="!loader">
     <div class="videoContainer p-2 d-flex justify-content-center">
 
-        <video class="col-6" controls autoplay [src]="videoData.url"></video>
+        <video class="col-6" autoplay controls [src]="videoData.url"></video>
     </div>
     <div class="videoDetails p-2 d-flex justify-content-center">
         <div class="details col-6 d-flex justify-content-center align-items-center">
-            <p class="display-3">Video Details Here!</p>
+            <p class="display-3" [innerText]="videoData.time+' ago'">Video Details Here!</p>
         </div>
     </div>
 </div>
