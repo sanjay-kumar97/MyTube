@@ -8,12 +8,16 @@
     <p class="display-2">My Uploads</p>
     <h2 *ngIf="isEmpty">You have not uploaded any Video yet.. Upload a Video!</h2>
     <ng-container *ngIf="!isEmpty">
-        <div class="d-flex col-3" *ngFor="let video of getValues(localMap)" style="padding-bottom: 2.75rem;">
-            <video [src]="video.url" height="75" width="120" style="background-color: #000;"></video>
-            <div class="d-flex flex-column">
-                <h1 [innerHTML]="video.title" class="ms-4"></h1>
-                <button class="btn btn-danger ms-4 me-auto" (click)="deleteVideo(video.title, video.videoId)">Delete
-                    Video</button>
+        <div class="d-flex col-3 videoContainer align-items-center p-3" *ngFor="let video of getValues(localMap)">
+            <video [src]="video.url" height="80" width="140" [routerLink]="['/watch', video.videoId]"></video>
+            <div class="d-flex flex-column my-auto">
+                <h1 [innerHTML]="video.title" class="ms-4 mt-1"></h1>
+                <div class="d-flex ms-4 justify-content-between" style="width: 150px;">
+                    <p [innerHTML]="video.views+' views'" class="my-auto"></p>
+                    <p [innerHTML]="video.likes+' likes'" class="my-auto"></p>
+                    <button class="btn btn-outline-danger my-auto" (click)="deleteVideo(video.title, video.videoId)"><i
+                            class="bi bi-trash"></i></button>
+                </div>
             </div>
         </div>
     </ng-container>
