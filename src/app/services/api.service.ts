@@ -22,7 +22,7 @@ export class ApiService {
         const token = credential?.accessToken;
         const user = result.user;
         if (!Object.keys(data).includes(user.uid)) {
-          this.writeUserData(user.displayName, user.uid, [''], [''], [''], new Date().getTime());
+          this.writeUserData(user.displayName, user.uid, '' + user.photoURL, [''], [''], [''], [''], new Date().getTime());
         }
         console.log({ token, user });
         if (page == 'profile') {
@@ -77,14 +77,16 @@ export class ApiService {
     setTimeout(() => window.location.reload(), 10);
   }
 
-  writeUserData(name: any, userId: any, liked: String[], viewed: String[], uploaded: String[], time: number) {
+  writeUserData(name: any, userId: any, profileImage: String, liked: String[], viewed: String[], uploaded: String[], notifications: String[], time: number) {
     db.set(db.ref(this.database, 'users/' + userId), {
       name: name,
       userId: userId,
       viewed: viewed,
       liked: liked,
       uploaded: uploaded,
-      joined: time
+      joined: time,
+      profileImage: profileImage,
+      notifications: notifications
     });
   }
 
@@ -92,6 +94,23 @@ export class ApiService {
     const dbRef = db.ref(db.getDatabase());
     var data, dataToReturn = {};
     db.get(db.child(dbRef, 'users/')).then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+        Object.assign(dataToReturn, data);
+        console.log('from get', snapshot.val(), typeof (data));
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+    return dataToReturn;
+  }
+
+  readSpecificUserData(userId: String) {
+    const dbRef = db.ref(db.getDatabase());
+    var data, dataToReturn = {};
+    db.get(db.child(dbRef, 'users/' + userId)).then((snapshot) => {
       if (snapshot.exists()) {
         data = snapshot.val();
         Object.assign(dataToReturn, data);
@@ -195,7 +214,7 @@ export class ApiService {
                 console.log('NULLLLLLL');
                 uploadedArr.shift();
               }
-              this.writeUserData(data[uid].name, data[uid].userId, data[uid].liked, data[uid].viewed, uploadedArr, data[uid].joined);
+              this.writeUserData(data[uid].name, data[uid].userId, data[uid].profileImage, data[uid].liked, data[uid].viewed, uploadedArr, data[uid].notifications, data[uid].joined);
             }, 2000);
           });
       }
