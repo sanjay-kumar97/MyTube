@@ -13,6 +13,7 @@ export class VideoComponent implements OnInit, OnDestroy {
   videoData: any;
   timer: any;
   loader: boolean = true;
+  originalTime: any;
   constructor(private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         setTimeout(() => this.checkView(), 1000);
       }
       this.loader = false;
+      this.originalTime = this.videoData.time;
       this.videoData.time = this.findTime(this.videoData.time);
       console.log(this.videoData);
     }, 2000);
@@ -57,7 +59,7 @@ export class VideoComponent implements OnInit, OnDestroy {
           viewedArr.push(this.id);
           this.api.writeUserData(userData[uid].name, uid, userData[uid].profileImage, userData[uid].liked, viewedArr, userData[uid].uploaded, userData[uid].notifications, userData[uid].joined,);
         }
-        this.api.writeVideoData(this.videoData.url, this.videoData.title, this.videoData.videoId, this.videoData.description, this.videoData.likes, this.videoData.views, this.videoData.userId, this.videoData.time);
+        this.api.writeVideoData(this.videoData.url, this.videoData.title, this.videoData.videoId, this.videoData.description, this.videoData.likes, this.videoData.views, this.videoData.userId, this.originalTime);
       }
     }, 1000);
   }
