@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   validate: boolean = false;
   profileImage: any;
   userDetails: any;
+  serachTerm: String = '';
 
   constructor(private router: Router, private api: ApiService) { }
 
@@ -52,7 +53,8 @@ export class HeaderComponent implements OnInit {
     this.searchIcon = false;
   }
 
-  showNotifications() {
+  navigateToNotificationsPage() {
+    this.router.navigate(['/notifications']);
     // setTimeout(function () { alert("No new Notifications currently!"); }, 3000);
     // tempAlert("No new notifications!", 3000);
     // function tempAlert(msg: any, duration: number) {
@@ -72,6 +74,31 @@ export class HeaderComponent implements OnInit {
     // setTimeout(() => {
     //   this.api.writeUserData(data[uid].name, uid, ['fd102256-e90c-40ae-b4fb-1b3a2212f423'], [''], [''], data[uid].joined);
     // }, 2000);
+  }
+
+  getSearchTerm(e: any) {
+    console.log(e.key);
+    if (e.key != 'Enter') {
+      this.serachTerm += e.key;
+    } else {
+      this.navigateToSearchPage();
+    }
+  }
+
+  navigateToSearchPage() {
+    this.router.navigate(['/search', this.serachTerm]);
+    this.resetSearch();
+  }
+
+  resetSearch() {
+    this.serachTerm = '';
+    var inp = document.getElementsByTagName('input')[0];
+    inp.blur();
+  }
+
+  public clearSearchInput() {
+    var inp = document.getElementsByTagName('input')[0];
+    inp.value = '';
   }
 
   navigateToUploadVideoPage() {
@@ -102,11 +129,13 @@ export class HeaderComponent implements OnInit {
       this.api.signOut();
       this.router.navigate(['Home']);
     } else {
-      sessionStorage.setItem('Prev', 'Home');
+      let prev = this.router.url;
+      sessionStorage.setItem('Prev', prev);
       this.router.navigate(['SignIn']);
     }
     // setTimeout(() => window.location.reload(), 10);
     this.ngOnInit();
   }
+
 
 }

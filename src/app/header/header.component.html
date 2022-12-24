@@ -20,9 +20,9 @@
 
     <div class="two text-light col-3 d-flex justify-content-center">
         <i class="bi bi-search my-auto ms-4" *ngIf="searchIcon"></i>
-        <input type="text" class="col-10 bg-transparent mx-auto py-1 px-2" placeholder="Search" (focus)="showIcon()"
-            (focusout)="hideIcon()">
-        <button class="btn btn-outline-light" id="btnSearch" type="submit">
+        <input type="text" id="searchInput" class="col-10 bg-transparent mx-auto py-1 px-2" placeholder="Search"
+            (focus)="showIcon()" (focusout)="hideIcon()" (keypress)="getSearchTerm($event)">
+        <button class="btn btn-outline-light" id="btnSearch" type="submit" (click)="navigateToSearchPage()">
             <i class="bi bi-search"></i>
         </button>
         <!-- <i class="bi bi-search my-auto me-2 px-2 py-1" style="border-left: 1px solid white;"></i> -->
@@ -33,7 +33,7 @@
         <button class="btn btn-dark me-2" (click)="navigateToUploadVideoPage()">
             <i class="bi bi-cloud-arrow-up fs-2"></i>
         </button>
-        <button class="btn btn-dark me-2" (click)="showNotifications()">
+        <button class="btn btn-dark me-2" (click)="navigateToNotificationsPage()">
             <i class="bi bi-bell fs-3"></i>
         </button>
         <!-- <h3 class="align-self-center p-0 m-0" *ngIf="this.isLoggedIn" [innerHTML]="userName">Some Name here</h3> -->
