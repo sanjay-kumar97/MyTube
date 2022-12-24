@@ -1,1 +1,10 @@
-<p>notifications works!</p>
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="loader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="!loader">
+    <p class="display-3">No Notifications currently!</p>
+</div>
