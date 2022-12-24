@@ -32,6 +32,8 @@ import { TestLayoutComponent } from './test-layout/test-layout.component';
 import { VideoComponent } from './video/video.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HistoryComponent } from './history/history.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { HistoryComponent } from './history/history.component';
     TestLayoutComponent,
     VideoComponent,
     ProfileComponent,
-    HistoryComponent
+    HistoryComponent,
+    NotificationsComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,
