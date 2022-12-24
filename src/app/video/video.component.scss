@@ -27,7 +27,54 @@
 
         .details {
             height: 100%;
-            background-color: gray;
+            border: 1px solid black;
+            border-radius: 10px;
+
+            input[type="checkbox"] {
+                width: 15px;
+                height: 15px;
+                outline: none;
+                margin: 0;
+                padding: 0;
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.25);
+                appearance: none;
+                transform: rotate(45deg) translateY(10%);
+                border-radius: 0px 0px 1px 0px;
+            }
+
+            input[type="checkbox"]::before {
+                position: absolute;
+                content: "";
+                background-color: rgba(0, 0, 0, 0.25);
+                height: 60%;
+                width: 100%;
+                top: -59%;
+                border-radius: 75px 75px 0px 0px;
+            }
+
+            input[type="checkbox"]::after {
+                position: absolute;
+                content: "";
+                background-color: rgba(0, 0, 0, 0.25);
+                height: 60%;
+                width: 100%;
+                top: 20%;
+                right: 79%;
+                transform: rotate(-90deg);
+                border-radius: 75px 75px 0px 0px;
+            }
+
+            input[type="checkbox"]:checked,
+            input:checked[type="checkbox"]::before,
+            input:checked[type="checkbox"]::after {
+                background-color: red;
+            }
+
+            img {
+                height: 30px;
+                border-radius: 50%;
+            }
         }
     }
 }
