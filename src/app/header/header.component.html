@@ -21,7 +21,7 @@
     <div class="two text-light col-3 d-flex justify-content-center">
         <i class="bi bi-search my-auto ms-4" *ngIf="searchIcon"></i>
         <input type="text" id="searchInput" class="col-10 bg-transparent mx-auto py-1 px-2" placeholder="Search"
-            (focus)="showIcon()" (focusout)="hideIcon()" (keypress)="getSearchTerm($event)">
+            (focus)="showIcon()" (focusout)="hideIcon()" (keypress)="getSearchTerm($event)" autocomplete="off">
         <button class="btn btn-outline-light" id="btnSearch" type="submit" (click)="navigateToSearchPage()">
             <i class="bi bi-search"></i>
         </button>
