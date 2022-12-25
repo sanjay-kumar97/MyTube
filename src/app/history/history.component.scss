@@ -1,5 +1,5 @@
 .load {
-    min-height: 80vh;
+    height: 80vh;
     margin: 0;
     padding: 0;
 }
@@ -54,5 +54,22 @@
         width: 72px;
         height: 72px;
         opacity: 0;
+    }
+}
+
+
+.historyContainer {
+    max-height: 35%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    video {
+        min-width: 26rem;
+        max-width: 26rem;
+        min-height: 15rem;
+        max-height: 15rem;
+        background-color: black;
+        border-radius: 15px;
+        cursor: pointer;
     }
 }
