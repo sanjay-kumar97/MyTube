@@ -1,3 +1,19 @@
-<div class="container-fluid d-flex justify-content-center align-items-center flex-column load">
-    <p class="display-3">You searched: {{searchTerm}}</p>
+<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="loader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<div class="container-fluid d-flex align-items-center p-4 flex-column load" *ngIf="!loader">
+    <div class="videoContainer d-flex my-3" *ngFor="let videoData of videoArr"
+        [routerLink]="['/watch', videoData.videoId]">
+        <video [src]="videoData.url"></video>
+        <div class="videoDetails d-flex flex-column ms-4">
+            <p class="h2" [innerText]="videoData.title">Video Title!</p>
+            <p class="h6">{{videoData.views}} views | {{videoData.time}} ago</p>
+            <p class="h5"><span><img [src]="userData[videoData.userId].profileImage" alt="profile"></span>
+                {{userData[videoData.userId].name}}</p>
+            <p class="lead" [innerText]="videoData.description"></p>
+        </div>
+    </div>
 </div>
