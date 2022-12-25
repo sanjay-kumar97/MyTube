@@ -2,7 +2,7 @@
     <ul class="nav-list px-4 py-0" [ngClass]="{'nav-open': sideNavState}">
         <li class="nav-list-item mt-0 d-flex gap-3" (click)="navigateToHome()">
             <i class="bi bi-house-door fs-2 py-2 d-block my-auto"></i>
-            <span class="fs-4 d-block my-auto ms-4">Home</span>
+            <span *ngIf="sideNavState" class="fs-4 d-block my-auto ms-4">Home</span>
         </li>
         <!-- <li class="nav-list-item mt-4 d-flex gap-3">
             <i class="bi bi-collection-play fs-2 py-2 d-block my-auto"></i>
@@ -10,13 +10,15 @@
         </li> -->
         <li class="nav-list-item mt-4 d-flex gap-3" (click)="navigateToLibrary()">
             <i class="bi bi-collection-play fs-2 py-2 d-block my-auto"></i>
-            <span class="fs-4 d-block my-auto ms-4">Library</span>
+            <span *ngIf="sideNavState" class="fs-4 d-block my-auto ms-4">Library</span>
         </li>
         <li class="nav-list-item mt-4 d-flex gap-3" (click)="navigateToHistory()">
             <i class="bi bi-clock-history fs-2 py-2 d-block my-auto"></i>
-            <span class="fs-4 d-block my-auto ms-4">History</span>
+            <span *ngIf="sideNavState" class="fs-4 d-block my-auto ms-4">History</span>
         </li>
     </ul>
+    <p class="ms-5 px-5 version" *ngIf="sideNavState">VERSION {{versionInfo}}</p>
+    <p class="ms-4 version" *ngIf="!sideNavState">V-{{versionInfo}}</p>
 </div>
 
 <!-- <div class="side-nav-content text-light py-2">
