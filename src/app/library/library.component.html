@@ -4,12 +4,14 @@
         <div></div>
     </div>
 </div>
-<div class="container-fluid d-flex flex-column align-items-start gap-3 m-4" *ngIf="!loader">
-    <p class="display-2">My Uploads</p>
-    <h2 *ngIf="isEmpty">You have not uploaded any Video yet.. Upload a Video!</h2>
+<p class="display-2 m-4" *ngIf="!loader">My Uploads</p>
+<h2 *ngIf="isEmpty && !loader" class="m-4">You have not uploaded any Video yet..<span><button
+            class="btn btn-outline-danger ms-2" [routerLink]="['/Upload']">Click
+            here</button></span> to upload a Video!</h2>
+<div class="container col-3 d-flex flex-column flex-wrap align-items-start gap-4 m-4 load" *ngIf="!loader">
     <ng-container *ngIf="!isEmpty">
-        <div class="d-flex col-3 videoContainer align-items-center p-3" *ngFor="let video of getValues(localMap)">
-            <video [src]="video.url" height="80" width="140" [routerLink]="['/watch', video.videoId]"></video>
+        <div class="d-flex col-12 videoContainer align-items-center p-3" *ngFor="let video of getValues(localMap)">
+            <video [src]="video.url" height="90" width="160" [routerLink]="['/watch', video.videoId]"></video>
             <div class="d-flex flex-column my-auto">
                 <h1 [innerHTML]="video.title" class="ms-4 mt-1"></h1>
                 <div class="d-flex ms-4 justify-content-between" style="width: 150px;">
