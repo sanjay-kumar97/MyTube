@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   @Input() sideNavState: boolean = false;
-  versionInfo = '0.61'
+  versionInfo = '0.81'
 
   constructor(private router: Router) { }
 

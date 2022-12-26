@@ -17,3 +17,31 @@ ul {
     position: absolute;
     bottom: 0.5%;
 }
+
+@media only screen and (max-width: 1150px) {
+    ul {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    li {
+        display: inline;
+        width: fit-content;
+        margin-top: 0 !important;
+        // background-color: aquamarine;
+    }
+
+    .version {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+
+    li {
+        span {
+            display: none !important;
+            // background-color: aquamarine;
+        }
+    }
+}
