@@ -129,7 +129,7 @@
 @media only screen and (max-width: 860px) {
   .videoContainer {
     // background-color: green !important;
-    grid-template-columns: repeat(1, minmax(25rem, 1fr)) !important;
+    grid-template-columns: repeat(1, minmax(10rem, 1fr)) !important;
   }
 }
 
