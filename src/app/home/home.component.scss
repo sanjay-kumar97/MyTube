@@ -23,7 +23,7 @@
     grid-template-columns: repeat(5, 1fr);
 
     .video {
-      min-width: 16vw;
+      min-width: 20%;
       background-color: white;
 
       &:hover {
@@ -38,7 +38,8 @@
 
       video {
         width: 100%;
-        height: 8vw;
+        min-height: 15rem;
+        max-height: 15rem;
         border-radius: 10px;
         background-color: black;
         cursor: pointer;
@@ -100,6 +101,35 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 1700px) {
+  .videoContainer {
+    // background-color: red !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+@media only screen and (max-width: 1450px) {
+  .videoContainer {
+    // background-color: green !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .videoContainer {
+    // background-color: red !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    margin-bottom: 6rem;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .videoContainer {
+    // background-color: green !important;
+    grid-template-columns: repeat(1, minmax(25rem, 1fr)) !important;
   }
 }
 

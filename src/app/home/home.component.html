@@ -34,7 +34,7 @@
                     <div class="container align-self-start px-2 my-2 details">
                         <h2 class="title" [innerText]="video.title"></h2>
                         <p class="age ms-auto" [innerText]="video.time +' ago'">Time goes here Brr...</p>
-                        <p class="user" [innerText]="'Uploaded By ' + userFromDB[video.userId].name "></p>
+                        <p class="user" [innerText]="userFromDB[video.userId].name"></p>
                         <div class="d-flex ms-auto align-items-center">
                             <input *ngIf="isLoggedIn" class="me-2" id="heart" type="checkbox" value="click"
                                 [checked]="likedVids.includes(video.videoId)" (change)="getLike(video, $event)">
