@@ -28,7 +28,7 @@
 
       &:hover {
         scale: 1.05;
-        z-index: 100;
+        z-index: 99;
       }
 
       p {
@@ -136,7 +136,7 @@
     grid-template-columns: repeat(1, minmax(10rem, 1fr)) !important;
 
     .videoPlayer {
-      height: 10rem;
+      max-height: 10rem;
 
       // video {
       //   object-fit: cover;
