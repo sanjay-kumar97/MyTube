@@ -44,6 +44,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.header.clearSearchInput();
+    this.ngOnInit();
   }
 
 

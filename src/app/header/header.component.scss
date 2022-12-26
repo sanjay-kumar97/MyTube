@@ -41,3 +41,35 @@ img {
     border-radius: 50%;
     max-height: 2rem;
 }
+
+@media only screen and (max-width: 1150px) {
+
+    .three,
+    .one .side-nav-button {
+        display: none !important;
+    }
+
+    .one i {
+        margin-left: 0;
+
+    }
+
+    .two {
+        border: none;
+        justify-content: end !important;
+
+        input {
+            display: none;
+        }
+
+        #btnSearch {
+            border: none;
+
+            &:focus {
+                box-shadow: none;
+                outline: black;
+            }
+        }
+    }
+
+}
