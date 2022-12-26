@@ -46,7 +46,6 @@
           border-radius: 10px;
           background-color: black;
           cursor: pointer;
-          object-fit: cover;
         }
       }
 
@@ -135,6 +134,14 @@
   .videoContainer {
     // background-color: green !important;
     grid-template-columns: repeat(1, minmax(10rem, 1fr)) !important;
+
+    .videoPlayer {
+      height: 10rem;
+
+      // video {
+      //   object-fit: cover;
+      // }
+    }
   }
 }
 
