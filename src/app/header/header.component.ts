@@ -137,5 +137,13 @@ export class HeaderComponent implements OnInit {
     this.ngOnInit();
   }
 
+  showSearch() {
+    const bar = document.getElementById('searchbar');
+    console.log(bar);
+    if (bar) {
+      bar.style.display = 'block';
+      // bar.classList.replace('d-flex', 'd-block');
+    }
+  }
 
 }

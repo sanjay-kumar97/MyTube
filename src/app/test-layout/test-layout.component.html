@@ -1,6 +1,6 @@
-<div class="container-fluid bg-danger whole col-12">
+<div class="container-fluid bg-danger whole col-12 d-flex align-items-center flex-column py-4 gap-3" *ngIf="!loader">
     <!-- <div class="videoContainer d-flex justify-content-evenly flex-wrap"> -->
-    <div class="videoContainer p-3">
+    <!-- <div class="videoContainer p-3">
         <div class=" video bg-success d-flex justify-content-start flex-column align-items-center py-2">
             <video
                 src="https://firebasestorage.googleapis.com/v0/b/mytube-v0.appspot.com/o/Hehe%20Boy?alt=media&token=b52958eb-4e7d-4e6b-ab1e-4fdf68d0ed6c"
@@ -36,5 +36,27 @@
         <div class="video bg-success">
             <p class="display-5 bg-primary">Hello There!</p>
         </div>
+    </div> -->
+    <div class="card" style="width: 80rem; height: fit-content; border-radius: 10px;">
+        <div class="card-body">
+            <div class="card-title d-flex justify-content-between">
+                <p class="h3">Video Title goes here!</p>
+                <p class="h6">1 second ago</p>
+            </div>
+            <p class="card-text">Say Sanjay Kumar has liked your Video.</p>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
     </div>
+    <ng-container *ngFor="let item of notifyArr">
+        <div class="card" style="width: 80rem; height: fit-content; border-radius: 10px;">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <p class="h3" [innerText]="videoData[item.videoId].title">Video Title goes here!</p>
+                    <p class="h6">1 second ago</p>
+                </div>
+                <p class="card-text">Say someone has {{item.action}} your Video.</p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+        </div>
+    </ng-container>
 </div>

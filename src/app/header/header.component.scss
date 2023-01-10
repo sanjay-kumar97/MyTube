@@ -5,6 +5,7 @@
 .two {
     border: 1px solid white;
     border-radius: 25px;
+    display: flex;
 
     input {
         border: none;
@@ -54,21 +55,33 @@ img {
     }
 
     .two {
-        border: none;
-        justify-content: end !important;
+        display: none;
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        height: max-content;
+        z-index: 1000;
+        background-color: #212529;
 
-        input {
-            display: none;
-        }
+        // border: none;
+        //     justify-content: end !important;
 
-        #btnSearch {
-            border: none;
+        //     input {
+        //         display: none;
+        //     }
 
-            &:focus {
-                box-shadow: none;
-                outline: black;
-            }
-        }
+        //     #btnSearch {
+        //         border: none;
+
+        //         &:focus {
+        //             box-shadow: none;
+        //             outline: black;
+        //         }
+        //     }
+    }
+
+    .two-alt {
+        display: block !important;
     }
 
 }

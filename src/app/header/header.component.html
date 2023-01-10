@@ -17,12 +17,17 @@
         </ul>
     </div> -->
     <!-- <span class="example-spacer"></span> -->
-
-    <div class="two text-light col-3 d-flex justify-content-center">
+    <div class="two-alt text-light d-none">
+        <button class="btn btn-dark" (click)="showSearch()">
+            <i class="bi bi-search my-auto me-4"></i>
+        </button>
+    </div>
+    <div class="two text-light col-3 justify-content-center" id="searchbar">
         <i class="bi bi-search my-auto ms-4" *ngIf="searchIcon"></i>
         <input type="text" id="searchInput" class="col-10 bg-transparent mx-auto py-1 px-2" placeholder="Search"
             (focus)="showIcon()" (focusout)="hideIcon()" (keypress)="getSearchTerm($event)" autocomplete="off">
-        <button class="btn btn-outline-light" id="btnSearch" type="submit" (click)="navigateToSearchPage()">
+        <button class="btn btn-outline-light align-self-end" id="btnSearch" type="submit"
+            (click)="navigateToSearchPage()">
             <i class="bi bi-search"></i>
         </button>
         <!-- <i class="bi bi-search my-auto me-2 px-2 py-1" style="border-left: 1px solid white;"></i> -->
