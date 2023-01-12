@@ -54,6 +54,17 @@ export class VideoComponent implements OnInit, OnDestroy {
   }
 
   getLike(e: any) {
+    var currUser: any = this.api.readSpecificUserData(this.videoData.userId);
+    var notifyArr: Object[];
+    let uid = this.api.getUserDetails().UID;
+    setTimeout(() => {
+      notifyArr = currUser.notifications;
+      if (notifyArr[0] == "") {
+        console.log('NULLLLLLL');
+        notifyArr.shift();
+      }
+      console.log({ currUser, notifyArr });
+    }, 1000);
     if (e.target.checked) {
       if (!this.isLoggedIn) {
         let prev = this.router.url;
@@ -66,6 +77,10 @@ export class VideoComponent implements OnInit, OnDestroy {
         this.likedArr.push(this.id);
         console.log('Liked', this.currUserData, this.likedArr);
       }
+      setTimeout(() => {
+        notifyArr.unshift({ action: 'Liked', status: 'Visible', time: new Date().getTime(), userId: uid, videoId: this.videoData.videoId, title: this.videoData.title });
+        this.api.writeUserData(currUser.name, currUser.userId, currUser.profileImage, currUser.liked, currUser.viewed, currUser.uploaded, notifyArr, currUser.joined);
+      }, 2000);
     } else {
       this.videoData.likes -= 1;
       // likedArr.pop();
