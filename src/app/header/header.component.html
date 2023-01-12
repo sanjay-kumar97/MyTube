@@ -40,6 +40,11 @@
         </button>
         <button class="btn btn-dark me-2" (click)="navigateToNotificationsPage()">
             <i class="bi bi-bell fs-3"></i>
+            <span class="position-absolute badge rounded-pill bg-danger fw-normal" style="transform: translateY(50%);"
+                *ngIf="notificationCount && notificationCount > 0" [innerText]="notificationCount">
+                <!-- {{notificationCount}} -->
+                <!-- <span class="visually-hidden">unread messages</span> -->
+            </span>
         </button>
         <!-- <h3 class="align-self-center p-0 m-0" *ngIf="this.isLoggedIn" [innerHTML]="userName">Some Name here</h3> -->
         <button class="btn btn-dark" (click)="navigateToProfilePage()">

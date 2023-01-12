@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 import { ApiService } from '../services/api.service';
 
 @Component({
+  providers: [AppComponent],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
@@ -18,8 +20,10 @@ export class HeaderComponent implements OnInit {
   profileImage: any;
   userDetails: any;
   serachTerm: String = '';
+  notificationCount: number = 0;
+  currUserData: any;
 
-  constructor(private router: Router, private api: ApiService) { }
+  constructor(private router: Router, private api: ApiService, public app: AppComponent) { }
 
   searchIcon: boolean = false;
   ngOnInit(): void {
@@ -27,13 +31,26 @@ export class HeaderComponent implements OnInit {
     // this.userName = sessionStorage.getItem('userName');
     setTimeout(() => {
       this.userDetails = this.api.getUserDetails();
-      console.log('Header lol', this.userDetails);
+      console.log('From Header', { userDetails: this.userDetails });
       this.isLoggedIn = this.api.isLoggedIn();
       this.profileImage = this.userDetails.profileImage;
       this.userName = this.userDetails.displayName;
       if (this.api.auth.currentUser) {
         this.validate = true;
       }
+      this.currUserData = this.api.readSpecificUserData(this.userDetails.UID);
+      setTimeout(() => {
+        let notifyArr = this.currUserData.notifications;
+        // this.notificationCount = notifyArr.length;
+        notifyArr.forEach((item: { status: string; }) => {
+          if (item.status === 'Visible') {
+            this.notificationCount += 1;
+          }
+        });
+        console.log({ this: this.notificationCount });
+      }, 2000);
+      // this.notificationCount = this.app.currUserData.notifications.length;
+      console.log(this.currUserData);
     }, 2000);
     // this.isLoggedIn = (sessionStorage.getItem('userName') != "") ? true : false;
     console.log(this.isLoggedIn);
