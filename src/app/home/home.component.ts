@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   isOnline: boolean = true;
   userFromDB: any;
   likedVids!: String[];
+  currUser: any;
 
   ngOnInit(): void {
     if (!navigator.onLine) {
@@ -67,8 +68,10 @@ export class HomeComponent implements OnInit {
       this.userFromDB = this.api.readUserData();
       setTimeout(() => {
         if (this.api.isLoggedIn()) {
-          this.likedVids = this.userFromDB['' + this.api.getUserDetails().UID].liked;
+          let uid = this.api.getUserDetails().UID;
+          this.likedVids = this.userFromDB['' + uid].liked;
           console.log('HELLLOOOOOO', this.likedVids);
+          this.currUser = this.userFromDB['' + uid];
         }
       }, 2000);
       setTimeout(() => { console.log(this.dataFromDB, this.userFromDB); }, 2000);
@@ -275,6 +278,16 @@ export class HomeComponent implements OnInit {
     // var data: any = this.api.readUserData();
     var uid = '' + this.api.getUserDetails().UID;
     var likedArr = this.userFromDB[uid].liked;
+    var currUser: any = this.api.readSpecificUserData(vidID.userId);
+    var notifyArr: Object[];
+    setTimeout(() => {
+      notifyArr = currUser.notifications;
+      if (notifyArr[0] == "") {
+        console.log('NULLLLLLL');
+        notifyArr.shift();
+      }
+      console.log({ currUser, notifyArr });
+    }, 1000);
     if (likedArr[0] == "") {
       console.log('NULLLLLLL');
       likedArr.shift();
@@ -290,6 +303,10 @@ export class HomeComponent implements OnInit {
         this.dataFromDB[vidID.videoId].likes += 1;
         likedArr.push(vidID.videoId);
         console.log('Liked', this.userFromDB, likedArr);
+        setTimeout(() => {
+          notifyArr.unshift({ action: 'Liked', status: 'Visible', time: new Date().getTime(), userId: uid, videoId: vidID.videoId, title: vidID.title });
+          this.api.writeUserData(currUser.name, currUser.userId, currUser.profileImage, currUser.liked, currUser.viewed, currUser.uploaded, notifyArr, currUser.joined);
+        }, 2000);
       }
     } else {
       this.dataFromDB[vidID.videoId].likes -= 1;
