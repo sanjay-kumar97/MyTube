@@ -5,6 +5,33 @@
     </div>
 </div>
 
-<div class="container-fluid d-flex justify-content-center align-items-center flex-column load" *ngIf="!loader">
+<div class="container-fluid d-flex align-items-center flex-column load gap-3 p-4" *ngIf="!loader && count !== 0">
+    <!-- <p class="display-3" [innerText]="count">No Notifications currently!</p> -->
+    <ng-container *ngFor="let item of notifyArr; let i = index">
+        <div class="card" style="width: 80rem; height: fit-content; border-radius: 10px;">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <p class="h3" [innerText]="item.title">Video Title goes here!</p>
+                    <p class="h6 me-2" [innerHTML]="this.app.findTime(item.time)+' ago'">1 second ago</p>
+                </div>
+                <p class="card-text">
+                    <span *ngIf="item.action === 'Liked'" class="me-2">
+                        <img [src]="userData[item.userId].profileImage">
+                    </span>
+                    {{getActionText(item)}}
+                    <span>
+                        <button class="btn btn-danger float-end"
+                            [innerText]="item.status === 'Visible' ? 'Mark as Read' : 'Mark as Unread'"
+                            (click)="changeStatus(i, item.status)">
+                        </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="container-fluid d-flex align-items-center justify-content-center flex-column load gap-3 p-4"
+    *ngIf="!loader && count === 0">
     <p class="display-3">No Notifications currently!</p>
 </div>
