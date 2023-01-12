@@ -12,6 +12,18 @@ export class ApiService {
   constructor(private database: db.Database, public storage: st.Storage, private router: Router) { }
 
   auth = getAuth();
+  public DATA: any;
+
+  public setDATA(data: any) {
+    this.DATA = data;
+  }
+
+  public getDATA() {
+    var dataToRet = {};
+    Object.assign(dataToRet, this.DATA);
+    sessionStorage.setItem('DATA', JSON.stringify(this.DATA));
+    return dataToRet;
+  }
 
   signInWithGoogle(page: any) {
     const provider = new GoogleAuthProvider();
@@ -45,7 +57,7 @@ export class ApiService {
   }
 
   getUserDetails() {
-    console.log(this.auth.currentUser);
+    // console.log(this.auth.currentUser);
     let userDetails = { displayName: this.auth.currentUser?.displayName, profileImage: this.auth.currentUser?.photoURL, UID: this.auth.currentUser?.uid };
     // if (this.auth.currentUser != null) {
     return userDetails;
@@ -77,7 +89,26 @@ export class ApiService {
     setTimeout(() => window.location.reload(), 10);
   }
 
-  writeUserData(name: any, userId: any, profileImage: String, liked: String[], viewed: String[], uploaded: String[], notifications: String[], time: number) {
+  public getAllData() {
+    const dbRef = db.ref(db.getDatabase());
+    var data = {};
+    db.get(db.child(dbRef, '/')).then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+        // Object.assign(this.DATA, data);
+        // this.DATA = data;
+        this.setDATA(data);
+        // console.log('From API', snapshot.val(), typeof (data));
+        console.log('From API:', "Got DATA :D", this.getDATA());
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+
+  writeUserData(name: any, userId: any, profileImage: String, liked: String[], viewed: String[], uploaded: String[], notifications: Object[], time: number) {
     db.set(db.ref(this.database, 'users/' + userId), {
       name: name,
       userId: userId,
@@ -97,7 +128,8 @@ export class ApiService {
       if (snapshot.exists()) {
         data = snapshot.val();
         Object.assign(dataToReturn, data);
-        console.log('from get', snapshot.val(), typeof (data));
+        // console.log('From API', snapshot.val(), typeof (data));
+        console.log('From API:', "Returned userData :)");
       } else {
         console.log("No data available");
       }
@@ -114,7 +146,8 @@ export class ApiService {
       if (snapshot.exists()) {
         data = snapshot.val();
         Object.assign(dataToReturn, data);
-        console.log('from get', snapshot.val(), typeof (data));
+        console.log('From API:', "Returned singleUserData :)");
+        // console.log('From API', snapshot.val(), typeof (data));
       } else {
         console.log("No data available");
       }
@@ -148,7 +181,8 @@ export class ApiService {
       if (snapshot.exists()) {
         data = snapshot.val();
         Object.assign(dataToReturn, data);
-        console.log('from get', snapshot.val(), typeof (data));
+        console.log('From API:', "Returned videoData :)");
+        // console.log('From API', snapshot.val(), typeof (data));
       } else {
         console.log("No data available");
       }
@@ -165,7 +199,8 @@ export class ApiService {
       if (snapshot.exists()) {
         data = snapshot.val();
         Object.assign(dataToReturn, data);
-        console.log('from get', snapshot.val(), typeof (data));
+        console.log('From API:', "Returned singleVideoData :)");
+        // console.log('From API', snapshot.val(), typeof (data));
       } else {
         console.log("No data available");
       }
@@ -184,8 +219,10 @@ export class ApiService {
     var data: any = this.readUserData();
     var uid = '' + this.getUserDetails().UID;
     var uploadedArr: String[];
+    var notifyArr: Object[];
     setTimeout(() => {
       uploadedArr = data[uid].uploaded;
+      notifyArr = data[uid].notifications;
     }, 2000);
 
     const storageRef = st.ref(this.storage, videoData.title);
@@ -214,7 +251,12 @@ export class ApiService {
                 console.log('NULLLLLLL');
                 uploadedArr.shift();
               }
-              this.writeUserData(data[uid].name, data[uid].userId, data[uid].profileImage, data[uid].liked, data[uid].viewed, uploadedArr, data[uid].notifications, data[uid].joined);
+              notifyArr.unshift({ action: 'Posted', status: 'Visible', time: new Date().getTime(), userId: uid, videoId: videoId, title: videoData.title });
+              if (notifyArr[0] == "") {
+                console.log('NULLLLLLL');
+                notifyArr.shift();
+              }
+              this.writeUserData(data[uid].name, data[uid].userId, data[uid].profileImage, data[uid].liked, data[uid].viewed, uploadedArr, notifyArr, data[uid].joined);
             }, 2000);
           });
       }
