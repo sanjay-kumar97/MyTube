@@ -21,6 +21,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchTerm = "" + this.route.snapshot.paramMap.get('term');
     this.router.routeReuseStrategy.shouldReuseRoute = () => { return false; };
+    console.log("Searched: ", this.searchTerm);
     this.videoData = this.api.readVideoData();
     this.userData = this.api.readUserData();
     setTimeout(() => this.getVideosToDisplay(this.searchTerm), 1000);
@@ -43,7 +44,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.header.clearSearchInput();
+    // this.header.clearSearchInput();
     this.ngOnInit();
   }
 
