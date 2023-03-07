@@ -113,6 +113,9 @@ export class UploadVideoComponent implements OnInit {
           document.getElementsByTagName('textarea')[0].value = '';
           document.getElementsByTagName('input')[2].value = '';
           progressbar!.innerText = 'Upload Done!';
+          setTimeout(() => {
+            this.redirectToHome();
+          }, 2000);
         }
       }, 100);
     }, 2000);
