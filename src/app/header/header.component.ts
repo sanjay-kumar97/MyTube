@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { ApiService } from '../services/api.service';
@@ -8,7 +7,8 @@ import { ApiService } from '../services/api.service';
   providers: [AppComponent],
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
 
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   notificationCount: number = 0;
   currUserData: any;
 
-  constructor(private router: Router, private api: ApiService, public app: AppComponent) { }
+  constructor(private router: Router, private api: ApiService, public app: AppComponent, private ref: ChangeDetectorRef) { }
 
   searchIcon: boolean = false;
   ngOnInit(): void {
@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
           if (item.status === 'Visible') {
             this.notificationCount += 1;
           }
+          this.ref.markForCheck();
         });
         console.log({ this: this.notificationCount });
       }, 2000);
