@@ -3,13 +3,14 @@ import * as st from '@angular/fire/storage';
 import * as db from '@angular/fire/database';
 import { getAuth, signOut, GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private database: db.Database, public storage: st.Storage, private router: Router) { }
+  constructor(private database: db.Database, public storage: st.Storage, private router: Router, private http: HttpClient) { }
 
   auth = getAuth();
   public DATA: any;
@@ -271,5 +272,9 @@ export class ApiService {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  querySearchResult(term: String) {
+    return this.http.get<any>(`https://mytube-v0-default-rtdb.firebaseio.com/videos.json?orderBy="title"&equalTo="${term}"`);
   }
 }
