@@ -35,9 +35,6 @@ export class NotificationsComponent implements OnInit {
           if (this.notifyArr[0] == "") {
             console.log('NULLLLLLL');
             this.notifyArr.shift();
-            // } else {
-            //   // this.newNotifyArr = Object.assign([], this.notifyArr);
-            //   this.notifyArr.sort().reverse();
           }
           this.count = this.notifyArr.length;
           console.log({ video: this.videoData, user: this.userData, notifi: this.notifyArr });
@@ -55,7 +52,7 @@ export class NotificationsComponent implements OnInit {
       return "Your Video was Uploaded Successfully!";
     } else if (item.action === "Liked") {
       return this.userData[item.userId].name + " has Liked Your Video.";
-    } else if (item.action === "Removd") {
+    } else if (item.action === "Removed") {
       return "Your Video was Removed!";
     } else {
       return "No Comments Simply Waste!";
@@ -73,7 +70,7 @@ export class NotificationsComponent implements OnInit {
     console.log(this.notifyArr);
     let user = this.userData[this.uid];
     this.api.writeUserData(user.name, this.uid, user.profileImage, user.liked, user.viewed, user.uploaded, this.notifyArr, user.joined);
-    // setTimeout(() => this.head.ngOnInit(), 1000);
+    // setTimeout(() => this.head.ngOnInit(), 2000);
     // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
     //   this.router.navigate(['/notifications']);
     // });
