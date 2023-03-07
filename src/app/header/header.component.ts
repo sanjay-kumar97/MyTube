@@ -7,8 +7,7 @@ import { ApiService } from '../services/api.service';
   providers: [AppComponent],
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
@@ -23,7 +22,7 @@ export class HeaderComponent implements OnInit {
   notificationCount: number = 0;
   currUserData: any;
 
-  constructor(private router: Router, private api: ApiService, public app: AppComponent, private ref: ChangeDetectorRef) { }
+  constructor(private router: Router, private api: ApiService, public app: AppComponent) { }
 
   searchIcon: boolean = false;
   ngOnInit(): void {
@@ -46,7 +45,6 @@ export class HeaderComponent implements OnInit {
           if (item.status === 'Visible') {
             this.notificationCount += 1;
           }
-          this.ref.markForCheck();
         });
         console.log({ this: this.notificationCount });
       }, 2000);
